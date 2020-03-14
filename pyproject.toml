@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "viewmask"
+version = "0.1.0"
+description = ""
+authors = ["sumanthratna <sumanthratna@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+click = "^7.1.1"
+napari = "^0.2.12"
+Pillow = "^7.0.0"
+numpy = "^1.18.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.poetry.scripts]
+viewmask = "bin.cli:cli"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
