@@ -32,6 +32,8 @@ def centers_of_contours(contours):
     return centers
 
 
+# TODO: remove default for shape,
+# instead guess image based on min/max coordinates
 def xml_to_image(xml_tree, shape=(1000, 1000, 3)):
     contours = xml_to_contours(xml_tree, 'cv2')
     centers = centers_of_contours(contours)
@@ -42,3 +44,9 @@ def xml_to_image(xml_tree, shape=(1000, 1000, 3)):
             [contour], dtype=np.int32), [230, 230, 230])
         cv2.circle(rendered_annotations, center, 4, [0, 0, 0], -1)
     return rendered_annotations
+
+
+def get_stroke_color(xml_tree):
+    decimal_color = xml_tree.find('./Annotation').attrib['LineColor']
+    line_color = hex(int(decimal_color)).replace('0x', '').zfill(6)
+    return line_color

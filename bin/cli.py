@@ -5,7 +5,10 @@ import napari
 import xml.etree.ElementTree as ET
 from PIL import Image
 import numpy as np
-from viewmask.utils import xml_to_contours, centers_of_contours, xml_to_image
+from viewmask.utils import (xml_to_contours,
+                            centers_of_contours,
+                            xml_to_image,
+                            get_stroke_color)
 from os.path import splitext
 
 
@@ -38,8 +41,7 @@ def view_annotations(annotations, interactive):
         viewer = napari.Viewer()
         if interactive:
             regions = xml_to_contours(tree, 'napari')
-            decimal_color = tree.find('./Annotation').attrib['LineColor']
-            line_color = hex(int(decimal_color)).replace('0x', '').zfill(6)
+            line_color = get_stroke_color(tree)
             viewer.add_shapes(
                 regions, shape_type='path', edge_color=f"#{line_color}")
             viewer.add_points(centers_of_contours(regions))
@@ -48,7 +50,7 @@ def view_annotations(annotations, interactive):
                 rendered_annotations = np.load(annotations)
             else:
                 rendered_annotations = xml_to_image(tree)
-            viewer.add_image(
+            viewer.add_labels(
                 rendered_annotations,
                 name='annotations',
                 is_pyramid=False
@@ -97,8 +99,7 @@ def view_overlay(image, annotations, interactive):
 
         if interactive:
             regions = xml_to_contours(tree, 'napari')
-            decimal_color = tree.find('./Annotation').attrib['LineColor']
-            line_color = hex(int(decimal_color)).replace('0x', '').zfill(6)
+            line_color = get_stroke_color(tree)
             viewer.add_shapes(
                 regions, shape_type='path', edge_color=f"#{line_color}")
             viewer.add_points(centers_of_contours(regions))
@@ -107,7 +108,7 @@ def view_overlay(image, annotations, interactive):
                 rendered_annotations = np.load(annotations)
             else:
                 rendered_annotations = xml_to_image(tree, shape=np_img.shape)
-            viewer.add_image(
+            viewer.add_labels(
                 rendered_annotations,
                 name='annotations',
                 is_pyramid=False
