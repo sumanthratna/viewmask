@@ -16,7 +16,14 @@ def cli():
 
 @cli.command()
 @click.argument('annotations', type=click.Path(exists=True, dir_okay=False))
-@click.option('-i', '--interactive', default=False, show_default=True, type=bool, is_flag=True)
+@click.option(
+    '-i',
+    '--interactive',
+    default=False,
+    show_default=True,
+    type=bool,
+    is_flag=True
+)
 def view_annotations(annotations, interactive):
     if splitext(annotations)[1] == '.npy' and interactive is True:
         raise ValueError(
@@ -62,7 +69,14 @@ def view_image(image):
 @cli.command()
 @click.argument('image', type=click.Path(exists=True, dir_okay=False))
 @click.argument('annotations', type=click.Path(exists=True, dir_okay=False))
-@click.option('-i', '--interactive', default=False, show_default=True, type=bool, is_flag=True)
+@click.option(
+    '-i',
+    '--interactive',
+    default=False,
+    show_default=True,
+    type=bool,
+    is_flag=True
+)
 def view_overlay(image, annotations, interactive):
     if splitext(annotations)[1] == '.npy' and interactive is True:
         raise ValueError(
