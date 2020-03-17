@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "viewmask"
-version = "0.1.2"
+version = "0.1.3"
 description = ""
 authors = ["sumanthratna <sumanthratna@gmail.com>"]
 
