@@ -1,9 +1,15 @@
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 from viewmask.utils import (xml_to_contours,
                             centers_of_contours,
                             xml_to_image,
-                            get_stroke_color)
-__all__ = ['xml_to_contours', 'centers_of_contours',
-           'xml_to_image', 'get_stroke_color']
+                            get_stroke_color,
+                            mask_to_contours,
+                            centers_to_image)
+__all__ = ['xml_to_contours',
+           'centers_of_contours',
+           'xml_to_image',
+           'get_stroke_color',
+           'mask_to_contours',
+           'centers_to_image']

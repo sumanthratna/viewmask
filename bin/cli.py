@@ -8,7 +8,9 @@ import numpy as np
 from viewmask.utils import (xml_to_contours,
                             centers_of_contours,
                             xml_to_image,
-                            get_stroke_color)
+                            get_stroke_color,
+                            mask_to_contours,
+                            centers_to_image)
 from os.path import splitext
 
 
@@ -43,17 +45,35 @@ def view_annotations(annotations, interactive):
             regions = xml_to_contours(tree, 'napari')
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
-                regions, shape_type='path', edge_color=f"#{line_color}")
-            viewer.add_points(centers_of_contours(regions))
+                regions,
+                shape_type='path',
+                edge_color=f"#{line_color}"
+                )
+            viewer.add_points(
+                centers_of_contours(regions),
+                name='centers'
+            )
         else:
             if splitext(annotations)[1] == '.npy':
                 rendered_annotations = np.load(annotations)
+                viewer.add_image(
+                    rendered_annotations,
+                    name='annotations',
+                    is_pyramid=False
+                )
             else:
                 rendered_annotations = xml_to_image(tree)
-            viewer.add_labels(
-                rendered_annotations,
-                name='annotations',
-                is_pyramid=False
+                viewer.add_image(
+                    rendered_annotations,
+                    name='annotations',
+                    is_pyramid=False
+                )
+            centers = centers_of_contours(
+                mask_to_contours(rendered_annotations))
+            viewer.add_image(
+                centers_to_image(centers),
+                name='centers',
+                rgb=True
             )
 
 
@@ -84,11 +104,6 @@ def view_overlay(image, annotations, interactive):
         raise ValueError(
             "The interactive flag cannot be passed with a numpy mask.")
 
-    # TODO: get rid of this, some XMLs might actually be unparseable:
-    try:
-        tree = ET.parse(annotations)
-    except ET.ParseError:
-        pass
     with napari.gui_qt():
         viewer = napari.Viewer()
         if splitext(image)[1] == '.npy':
@@ -98,20 +113,40 @@ def view_overlay(image, annotations, interactive):
         viewer.add_image(np_img, name='image')
 
         if interactive:
+            tree = ET.parse(annotations)
             regions = xml_to_contours(tree, 'napari')
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
-                regions, shape_type='path', edge_color=f"#{line_color}")
-            viewer.add_points(centers_of_contours(regions))
+                regions,
+                shape_type='path',
+                edge_color=f"#{line_color}"
+                )
+            viewer.add_points(
+                centers_of_contours(regions),
+                name='centers'
+            )
         else:
             if splitext(annotations)[1] == '.npy':
                 rendered_annotations = np.load(annotations)
+                viewer.add_image(
+                    rendered_annotations,
+                    name='annotations',
+                    is_pyramid=False
+                )
             else:
-                rendered_annotations = xml_to_image(tree, shape=np_img.shape)
-            viewer.add_labels(
-                rendered_annotations,
-                name='annotations',
-                is_pyramid=False
+                tree = ET.parse(annotations)
+                rendered_annotations = xml_to_image(tree)
+                viewer.add_image(
+                    rendered_annotations,
+                    name='annotations',
+                    is_pyramid=False
+                )
+            centers = centers_of_contours(
+                mask_to_contours(rendered_annotations))
+            viewer.add_image(
+                centers_to_image(centers),
+                name='centers',
+                rgb=True
             )
 
 
