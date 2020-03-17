@@ -10,7 +10,7 @@ click = "^7.1.1"
 napari = "^0.2.12"
 Pillow = "^7.0.0"
 numpy = "^1.18.1"
-opencv-python = "^4.2.0"
+opencv-python-headless = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
