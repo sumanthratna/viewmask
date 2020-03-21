@@ -67,7 +67,7 @@ def mask_to_contours(mask):
 def centers_to_image(centers, shape=(1000, 1000, 3)):
     rendered_annotations = np.zeros(shape, dtype=np.uint8)
     if rendered_annotations.ndim == 2:
-        write_color = 0
+        write_color = 255
     else:
         write_color = [255, 0, 0]
     for center in centers:
