@@ -64,12 +64,12 @@ def mask_to_contours(mask):
     return contours
 
 
-def centers_to_image(centers, shape=(1000, 1000, 3)):
+def centers_to_image(centers, shape=(1000, 1000, 3), radius=4):
     rendered_annotations = np.zeros(shape, dtype=np.uint8)
     if rendered_annotations.ndim == 2:
         write_color = 255
     else:
         write_color = [255, 0, 0]
     for center in centers:
-        cv2.circle(rendered_annotations, center, 4, write_color, -1)
+        cv2.circle(rendered_annotations, center, radius, write_color, -1)
     return rendered_annotations
