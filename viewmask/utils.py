@@ -20,6 +20,11 @@ def xml_to_contours(xml_tree, contour_drawer):
         A list of contours, where each contour is a list of coordinates,
         where each coordinate is a list with exactly 2 integers, representing
         the X and Y coordinates, respectively.
+
+    Notes
+    -----
+    The main diagonal is defined as the line that connects the top-left corner
+    and the bottom right corner.
     """
     if contour_drawer not in ['napari', 'cv2']:
         raise ValueError("contour_drawer must be 'cv2' or 'napari'")

@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.9 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-viewmask-s-documentation">
+<h1>Welcome to viewmask’s documentation!<a class="headerlink" href="#welcome-to-viewmask-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="command-line-interface">
+<h2>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-viewmask.utils">
+<span id="package"></span><h2>Package<a class="headerlink" href="#module-viewmask.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="viewmask.utils.centers_of_contours">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">centers_of_contours</code><span class="sig-paren">(</span><em class="sig-param">contours</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.centers_of_contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the centers of a list of OpenCV contours.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>contours</strong> (<em>list of numpy.ndarray</em>) – A list of cv2 contours; each contour’s center will be calculated. Each
+contour is a list with 1 element, which is a list with 2 elements,
+representing the X and Y coordinates as integers, respectively.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>centers</strong> – A list of coordinates, where each coordinate is a tuple with exactly 2
+ints, representing the X and Y coordinates, respectively. Each
+coordinate represents the center of the corresponding contour in
+<cite>contours</cite>. In this method, the center is defined as the centroid of
+the contour.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of tuple of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viewmask.utils.centers_to_image">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">centers_to_image</code><span class="sig-paren">(</span><em class="sig-param">centers</em>, <em class="sig-param">shape=(1000</em>, <em class="sig-param">1000</em>, <em class="sig-param">3)</em>, <em class="sig-param">radius=4</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.centers_to_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the line color for annotations from a TCGA annotations file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centers</strong> (<em>list of tuple of int</em>) – A list of coordinates, where each coordinate is a tuple with exactly 2
+ints, representing the X and Y coordinates, respectively. Each
+coordinate represents the center of the corresponding contour in
+<cite>contours</cite>.</p></li>
+<li><p><strong>shape</strong> (<em>tuple of int</em><em>, </em><em>optional</em>) – The shape of the mask. <cite>shape</cite> defaults to <cite>(1000, 1000, 3)</cite>, since
+most images in the TCGA dataset have a height and width of 1000 pixels
+and have 3 channels (red, green, and blue). If <cite>shape</cite> provides a 3rd
+value with value 3, the centers will be drawn in red; otherwise, if
+shape has only 2 values, the centers will be drawn in white.</p></li>
+<li><p><strong>radius</strong> (<em>int</em><em>, </em><em>optional</em>) – The radius of each center, defaults to <cite>4</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rendered_annotations</strong> – An N-dimensional NumPy array representing the RGB output image with the
+shape defined as <cite>shape</cite>.async</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viewmask.utils.get_stroke_color">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">get_stroke_color</code><span class="sig-paren">(</span><em class="sig-param">xml_tree</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.get_stroke_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the line color for annotations from a TCGA annotations file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xml_tree</strong> (<em>xml.etree.ElementTree</em>) – The XML tree of the TCGA annotations file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>line_color</strong> – A string representing the proper hex code to use for the stroke color.
+The output is always 6 characters and does not include the hashtag.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viewmask.utils.mask_to_contours">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">mask_to_contours</code><span class="sig-paren">(</span><em class="sig-param">mask</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.mask_to_contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the line color for annotations from a TCGA annotations file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mask</strong> (<em>numpy.ndarray</em>) – A NumPy N-dimensional array representing the image. If <cite>mask</cite> has 3
+dimensions, the image is assumed to be RGB, and will be converted to
+grayscale. If <cite>mask</cite> only has 2 dimensions, the image is assumed to be
+grayscale. The values in the input should be in the range [0, 255].</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>contours</strong> – A list of contours, where each contour is a list of coordinates, where
+each coordinate is a list of a list of X and Y integers.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viewmask.utils.xml_to_contours">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">xml_to_contours</code><span class="sig-paren">(</span><em class="sig-param">xml_tree</em>, <em class="sig-param">contour_drawer</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.xml_to_contours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract contours from a TCGA XML annotations file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xml_tree</strong> (<em>xml.etree.ElementTree</em>) – The XML tree of the TCGA annotations file.</p></li>
+<li><p><strong>contour_drawer</strong> (<em>{'napari'</em><em>, </em><em>'cv2'}</em>) – If <cite>contour_drawer</cite> is <cite>‘napari’</cite> then the contours will be transposed
+over its main diagonal. When <cite>contour_drawer</cite> is <cite>‘cv2’</cite>, no changes
+will be made to the returned contours.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>contours</strong> – A list of contours, where each contour is a list of coordinates,
+where each coordinate is a list with exactly 2 integers, representing
+the X and Y coordinates, respectively.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The main diagonal is defined as the line that connects the top-left corner
+and the bottom right corner.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="viewmask.utils.xml_to_image">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">xml_to_image</code><span class="sig-paren">(</span><em class="sig-param">xml_tree</em>, <em class="sig-param">shape=(1000</em>, <em class="sig-param">1000</em>, <em class="sig-param">3)</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.xml_to_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a TCGA annotations file to a binary mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xml_tree</strong> (<em>xml.etree.ElementTree</em>) – The XML tree of the TCGA annotations file.</p></li>
+<li><p><strong>shape</strong> (<em>tuple of int</em><em>, </em><em>optional</em>) – The shape of the mask. <cite>shape</cite> defaults to <cite>(1000, 1000, 3)</cite>, since
+most images in the TCGA dataset have a height and width of 1000 pixels
+and have 3 channels (red, green, and blue).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>rendered_annotations</strong> – An N-dimensional NumPy array representing the RGB output image with the
+shape defined as <cite>shape</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">viewmask</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Sumanth Ratna.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
