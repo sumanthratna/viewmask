@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "viewmask"
-version = "0.1.8"
+version = "0.1.9"
 description = ""
 authors = ["sumanthratna <sumanthratna@gmail.com>"]
 
@@ -14,6 +14,8 @@ opencv-python-headless = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+sphinx = "^2.4.4"
+sphinx-click = "^2.3.1"
 
 [tool.poetry.scripts]
 viewmask = "viewmask.cli:cli"

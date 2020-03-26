@@ -14,21 +14,28 @@ from viewmask.utils import (xml_to_contours,
 from os.path import splitext
 
 
+INTERACTIVE_OPTION_HELP = 'If passed, the annotations will be rendered as ' + \
+    'napari objects rather than rendered together and displayed as an image.'
+
+
 @click.group()
 def cli():
     pass
 
 
-@cli.command()
-@click.argument('annotations', type=click.Path(exists=True, dir_okay=False))
+@cli.command(name='annotations')
+@click.argument(
+    'annotations',
+    type=click.Path(exists=True, dir_okay=False)
+)
 @click.option(
     '-i',
     '--interactive',
     default=False,
     show_default=True,
     type=bool,
-    is_flag=True
-)
+    is_flag=True,
+    help=INTERACTIVE_OPTION_HELP)
 def view_annotations(annotations, interactive):
     if splitext(annotations)[1] == '.npy' and interactive is True:
         raise ValueError(
@@ -48,7 +55,7 @@ def view_annotations(annotations, interactive):
                 regions,
                 shape_type='path',
                 edge_color=f"#{line_color}"
-                )
+            )
             viewer.add_points(
                 centers_of_contours(regions),
                 name='centers'
@@ -77,7 +84,7 @@ def view_annotations(annotations, interactive):
             )
 
 
-@cli.command()
+@cli.command(name='image')
 @click.argument('image', type=click.Path(exists=True, dir_okay=False))
 def view_image(image):
     with napari.gui_qt():
@@ -88,7 +95,7 @@ def view_image(image):
         _ = napari.view_image(np_img, name='image')
 
 
-@cli.command()
+@cli.command(name='overlay')
 @click.argument('image', type=click.Path(exists=True, dir_okay=False))
 @click.argument('annotations', type=click.Path(exists=True, dir_okay=False))
 @click.option(
@@ -97,7 +104,8 @@ def view_image(image):
     default=False,
     show_default=True,
     type=bool,
-    is_flag=True
+    is_flag=True,
+    help=INTERACTIVE_OPTION_HELP
 )
 def view_overlay(image, annotations, interactive):
     if splitext(annotations)[1] == '.npy' and interactive is True:
@@ -120,7 +128,7 @@ def view_overlay(image, annotations, interactive):
                 regions,
                 shape_type='path',
                 edge_color=f"#{line_color}"
-                )
+            )
             viewer.add_points(
                 centers_of_contours(regions),
                 name='centers'
