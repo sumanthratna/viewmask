@@ -1,8 +1,12 @@
 [tool.poetry]
 name = "viewmask"
 version = "0.1.9"
-description = ""
+description = "A Python package and CLI to view XML annotations and NumPy masks."
+license = "MIT"
 authors = ["sumanthratna <sumanthratna@gmail.com>"]
+readme = "README.rst"
+repository = "https://github.com/sumanthratna/viewmask"
+documentation = "https://viewmask.readthedocs.io/en/latest/"
 
 [tool.poetry.dependencies]
 python = "^3.6"
