@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.9 documentation</title>
+    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.10 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -36,6 +36,71 @@
 </div>
 <div class="section" id="command-line-interface">
 <h2>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="viewmask">
+<h3>viewmask<a class="headerlink" href="#viewmask" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>viewmask <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<div class="section" id="viewmask-annotations">
+<h4>annotations<a class="headerlink" href="#viewmask-annotations" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>viewmask annotations <span class="o">[</span>OPTIONS<span class="o">]</span> ANNOTATIONS
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-viewmask-annotations-i">
+<code class="sig-name descname">-i</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--interactive</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-viewmask-annotations-i" title="Permalink to this definition">¶</a></dt>
+<dd><p>If passed, the annotations will be rendered as napari objects rather than rendered together and displayed as an image.  [default: False]</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-viewmask-annotations-arg-annotations">
+<code class="sig-name descname">ANNOTATIONS</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-viewmask-annotations-arg-annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="viewmask-image">
+<h4>image<a class="headerlink" href="#viewmask-image" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>viewmask image <span class="o">[</span>OPTIONS<span class="o">]</span> IMAGE
+</pre></div>
+</div>
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-viewmask-image-arg-image">
+<code class="sig-name descname">IMAGE</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-viewmask-image-arg-image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</div>
+<div class="section" id="viewmask-overlay">
+<h4>overlay<a class="headerlink" href="#viewmask-overlay" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>viewmask overlay <span class="o">[</span>OPTIONS<span class="o">]</span> IMAGE ANNOTATIONS
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="option">
+<dt id="cmdoption-viewmask-overlay-i">
+<code class="sig-name descname">-i</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--interactive</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-viewmask-overlay-i" title="Permalink to this definition">¶</a></dt>
+<dd><p>If passed, the annotations will be rendered as napari objects rather than rendered together and displayed as an image.  [default: False]</p>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="option">
+<dt id="cmdoption-viewmask-overlay-arg-image">
+<code class="sig-name descname">IMAGE</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-viewmask-overlay-arg-image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-viewmask-overlay-arg-annotations">
+<code class="sig-name descname">ANNOTATIONS</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-viewmask-overlay-arg-annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</div>
+</div>
 </div>
 <div class="section" id="module-viewmask.utils">
 <span id="package"></span><h2>Package<a class="headerlink" href="#module-viewmask.utils" title="Permalink to this headline">¶</a></h2>
