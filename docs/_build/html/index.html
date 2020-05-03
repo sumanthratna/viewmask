@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.10 documentation</title>
+    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.11 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -154,6 +154,46 @@ shape defined as <cite>shape</cite>.async</p>
 <dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viewmask.utils.file_to_dask_array">
+<code class="sig-prename descclassname">viewmask.utils.</code><code class="sig-name descname">file_to_dask_array</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">tile_size=1000</em>, <em class="sig-param">overlap=0</em>, <em class="sig-param">remove_last=True</em>, <em class="sig-param">allow_unknown_chunksizes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#viewmask.utils.file_to_dask_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert SVS, TIF or TIFF to dask array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>svs_file</strong> (<em>str</em>) – Image file.</p></li>
+<li><p><strong>tile_size</strong> (<em>int</em>) – Size of chunk to be read in.</p></li>
+<li><p><strong>overlap</strong> (<em>int</em>) – Do not modify, overlap between neighboring tiles.</p></li>
+<li><p><strong>remove_last</strong> (<em>bool</em>) – Remove last tile because it has a custom size.</p></li>
+<li><p><strong>allow_unknown_chunksizes</strong> (<em>bool</em>) – Allow different chunk sizes, more flexible, but slowdown.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>arr</strong> – A Dask Array representing the contents of the image file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dask.array.Array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arr</span> <span class="o">=</span> <span class="n">svs2dask_array</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">path</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">tile_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">overlap</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">remove_last</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">allow_unknown_chunksizes</span><span class="o">=</span><span class="kc">False</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arr2</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arr3</span> <span class="o">=</span> <span class="n">to_pil</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">arr2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">dsize</span><span class="o">=</span><span class="p">(</span><span class="mi">1440</span><span class="p">,</span> <span class="mi">700</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">interpolation</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">INTER_CUBIC</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arr3</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">test_image_name</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
