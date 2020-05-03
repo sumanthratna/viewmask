@@ -109,15 +109,6 @@ optional = false
 python-versions = ">=3.6"
 version = "2.15.0"
 
-[package.dependencies]
-[package.dependencies.numpy]
-optional = true
-version = ">=1.13.0"
-
-[package.dependencies.toolz]
-optional = true
-version = ">=0.8.2"
-
 [package.extras]
 array = ["numpy (>=1.13.0)", "toolz (>=0.8.2)"]
 bag = ["cloudpickle (>=0.2.2)", "fsspec (>=0.6.0)", "toolz (>=0.8.2)", "partd (>=0.3.10)"]
@@ -126,6 +117,23 @@ dataframe = ["numpy (>=1.13.0)", "pandas (>=0.23.0)", "toolz (>=0.8.2)", "partd 
 delayed = ["cloudpickle (>=0.2.2)", "toolz (>=0.8.2)"]
 diagnostics = ["bokeh (>=1.0.0)"]
 distributed = ["distributed (>=2.0)"]
+
+[[package]]
+category = "main"
+description = "Distributed image processing"
+name = "dask-image"
+optional = false
+python-versions = "*"
+version = "0.2.0"
+
+[package.dependencies]
+numpy = ">=1.11.3"
+pims = ">=0.4.1"
+scipy = ">=0.19.1"
+
+[package.dependencies.dask]
+extras = ["array"]
+version = ">=0.16.1"
 
 [[package]]
 category = "main"
@@ -450,6 +458,17 @@ version = "4.2.0.34"
 numpy = ">=1.11.1"
 
 [[package]]
+category = "main"
+description = "Python interface to OpenSlide"
+name = "openslide-python"
+optional = false
+python-versions = "*"
+version = "1.1.1"
+
+[package.dependencies]
+Pillow = "*"
+
+[[package]]
 category = "dev"
 description = "Core utilities for Python packages"
 name = "packaging"
@@ -507,6 +526,19 @@ name = "pillow"
 optional = false
 python-versions = ">=3.5"
 version = "7.1.2"
+
+[[package]]
+category = "main"
+description = "Python Image Sequence"
+name = "pims"
+optional = false
+python-versions = "*"
+version = "0.4.1"
+
+[package.dependencies]
+numpy = ">=1.7"
+six = ">=1.8"
+slicerator = ">=0.9.7"
 
 [[package]]
 category = "main"
@@ -757,6 +789,17 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "1.14.0"
 
 [[package]]
+category = "main"
+description = "A lazy-loading, fancy-sliceable iterable."
+name = "slicerator"
+optional = false
+python-versions = "*"
+version = "1.0.0"
+
+[package.dependencies]
+six = "*"
+
+[[package]]
 category = "dev"
 description = "This package provides 26 stemmers for 25 languages generated from Snowball algorithms."
 name = "snowballstemmer"
@@ -977,7 +1020,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "941123530ad23d35c1400b3fc1b74f8010962798a8ceca2ce9a8e58b3d1188fb"
+content-hash = "8c0c9f2b8eac792663e953e7fd5fa94817a84f595ec2f8af00c98ffa782024b1"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1028,6 +1071,9 @@ cycler = [
 dask = [
     {file = "dask-2.15.0-py3-none-any.whl", hash = "sha256:22233534a045566ce28de551e93d498f23a95a0f788333706c912282a9c87829"},
     {file = "dask-2.15.0.tar.gz", hash = "sha256:911efab5679f26ae53dd20604bb57235fbd33444e59d153d727ccfdcf2516c9d"},
+]
+dask-image = [
+    {file = "dask-image-0.2.0.tar.gz", hash = "sha256:bece2ea347f963dc0168c7d5fdfd11e51b47d9c857d3bc56144d7c146964a23f"},
 ]
 decorator = [
     {file = "decorator-4.4.2-py2.py3-none-any.whl", hash = "sha256:41fa54c2a0cc4ba648be4fd43cff00aedf5b9465c9bf18d64325bc225f08f760"},
@@ -1210,6 +1256,19 @@ opencv-python-headless = [
     {file = "opencv_python_headless-4.2.0.34-cp38-cp38-manylinux1_i686.whl", hash = "sha256:f93bec89d943ca1877c38920e934ed1d6193cdc6ff09cb910c19c15643ee07df"},
     {file = "opencv_python_headless-4.2.0.34-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:ca9a5f4b04f2b423892ef5934fdd685edd0bc458c77fc7e164156a50e6be0377"},
 ]
+openslide-python = [
+    {file = "openslide-python-1.1.1.tar.gz", hash = "sha256:b460764914f3b9736f9bdd551da7927e194ed28d78588759a0a793dffe1749a6"},
+    {file = "openslide_python-1.1.1-cp27-cp27m-win32.whl", hash = "sha256:f08eeb52e3bb3faa3f0aa511401cbd35fdf1b68a41f56ef1178c8c28ebf26ba0"},
+    {file = "openslide_python-1.1.1-cp27-cp27m-win_amd64.whl", hash = "sha256:610fa497e982e996003c78adba3d2d047a6dd5de9ad394253246d45b2b35ca53"},
+    {file = "openslide_python-1.1.1-cp33-none-win32.whl", hash = "sha256:e340eec2f0823218afe369fd87c62dccdc09fed089396804d016b523bdd2bd55"},
+    {file = "openslide_python-1.1.1-cp33-none-win_amd64.whl", hash = "sha256:665882d5356639c0c12b782992234cf1f3369866c5b7b95a0a32539205de7c96"},
+    {file = "openslide_python-1.1.1-cp34-cp34m-win32.whl", hash = "sha256:27f47f3979b09e902a9cb74a1437990d23d60284d72d6b8076d6db7530e8b113"},
+    {file = "openslide_python-1.1.1-cp34-cp34m-win_amd64.whl", hash = "sha256:8d478c4a37b400ac2b6aad3f6d627c4a328ee845f5ffef5b9c998640cf1856d1"},
+    {file = "openslide_python-1.1.1-cp35-cp35m-win32.whl", hash = "sha256:3396524de1a77d0a5cd7cb10b272258328c4db64e3e1923f11adde78696fa571"},
+    {file = "openslide_python-1.1.1-cp35-cp35m-win_amd64.whl", hash = "sha256:6a7cc6d0a225f04d963bf91141012b0d66bd3a89970f5931341213bbf8cc7c3d"},
+    {file = "openslide_python-1.1.1-cp36-cp36m-win32.whl", hash = "sha256:b2e1055062ace17b09397d666efdfdaa388211ceacb00a8dac56353e92a490c6"},
+    {file = "openslide_python-1.1.1-cp36-cp36m-win_amd64.whl", hash = "sha256:ec675fd016da72ee9a76f7bd4b9bba8ae26b90b986685784d9fa7f6e08c6129f"},
+]
 packaging = [
     {file = "packaging-20.3-py2.py3-none-any.whl", hash = "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"},
     {file = "packaging-20.3.tar.gz", hash = "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3"},
@@ -1254,6 +1313,10 @@ pillow = [
     {file = "Pillow-7.1.2-pp373-pypy36_pp73-win32.whl", hash = "sha256:0f01e63c34f0e1e2580cc0b24e86a5ccbbfa8830909a52ee17624c4193224cd9"},
     {file = "Pillow-7.1.2-py3.8-macosx-10.9-x86_64.egg", hash = "sha256:70e3e0d99a0dcda66283a185f80697a9b08806963c6149c8e6c5f452b2aa59c0"},
     {file = "Pillow-7.1.2.tar.gz", hash = "sha256:a0b49960110bc6ff5fead46013bcb8825d101026d466f3a4de3476defe0fb0dd"},
+]
+pims = [
+    {file = "PIMS-0.4.1-py3-none-any.whl", hash = "sha256:e79f3c0c6acaff6d48041723cb11f057c18c7ffb00f8a0095e365db4e60d4350"},
+    {file = "PIMS-0.4.1.tar.gz", hash = "sha256:6a53a155e900b44e71127a1e1fccbfbaed7eec3c2b52497c40c23a05f334c9dd"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
@@ -1434,6 +1497,10 @@ shiboken2 = [
 six = [
     {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
     {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
+]
+slicerator = [
+    {file = "slicerator-1.0.0-py3-none-any.whl", hash = "sha256:63f12bec440b05ffb9a5b17812c835eb4631c0fbb1017421d9638378cfb93487"},
+    {file = "slicerator-1.0.0.tar.gz", hash = "sha256:18e60393e6765ca96986f801bbae62a617a1eba6ed57784e61b165ffc7dc1848"},
 ]
 snowballstemmer = [
     {file = "snowballstemmer-2.0.0-py2.py3-none-any.whl", hash = "sha256:209f257d7533fdb3cb73bdbd24f436239ca3b2fa67d56f6ff88e86be08cc5ef0"},

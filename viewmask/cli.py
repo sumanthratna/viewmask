@@ -3,9 +3,9 @@
 import click
 import napari
 import xml.etree.ElementTree as ET
-from PIL import Image
 import numpy as np
 from viewmask.utils import (
+    file_to_dask_array,
     xml_to_contours,
     centers_of_contours,
     xml_to_image,
@@ -15,6 +15,9 @@ from viewmask.utils import (
 )
 from os.path import splitext
 
+
+# TODO: eventually napari will rename is_pyramid to multiscale:
+# https://github.com/napari/napari/commit/1adff3e467768076643e8e02a12d4bf726f563a9
 
 INTERACTIVE_OPTION_HELP = 'If passed, the annotations will be rendered as ' + \
     'napari objects rather than rendered together and displayed as an image.'
@@ -93,12 +96,9 @@ def view_annotations(annotations, interactive):
 @cli.command(name='image')
 @click.argument('image', type=click.Path(exists=True, dir_okay=False))
 def view_image(image):
+    da_img = file_to_dask_array(image)
     with napari.gui_qt():
-        if splitext(image)[1] == '.npy':
-            np_img = np.load(image)
-        else:
-            np_img = np.array(Image.open(image))
-        _ = napari.view_image(np_img, name='image')
+        _ = napari.view_image(da_img, name='image')
 
 
 @cli.command(name='overlay')
@@ -114,17 +114,18 @@ def view_image(image):
     help=INTERACTIVE_OPTION_HELP
 )
 def view_overlay(image, annotations, interactive):
+    # TODO: use assert?
+    # TODO: use annotations.endswith('.npy')?
     if splitext(annotations)[1] == '.npy' and interactive is True:
         raise ValueError(
             "The interactive flag cannot be passed with a numpy mask.")
 
+    da_img = file_to_dask_array(image)
+
     with napari.gui_qt():
         viewer = napari.Viewer()
-        if splitext(image)[1] == '.npy':
-            np_img = np.load(image)
-        else:
-            np_img = np.array(Image.open(image))
-        viewer.add_image(np_img, name='image', blending='additive')
+
+        viewer.add_image(da_img, name='image', blending='additive')
 
         if interactive:
             tree = ET.parse(annotations)
