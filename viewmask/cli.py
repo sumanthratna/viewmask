@@ -5,12 +5,14 @@ import napari
 import xml.etree.ElementTree as ET
 from PIL import Image
 import numpy as np
-from viewmask.utils import (xml_to_contours,
-                            centers_of_contours,
-                            xml_to_image,
-                            get_stroke_color,
-                            mask_to_contours,
-                            centers_to_image)
+from viewmask.utils import (
+    xml_to_contours,
+    centers_of_contours,
+    xml_to_image,
+    get_stroke_color,
+    mask_to_contours,
+    centers_to_image
+)
 from os.path import splitext
 
 
@@ -35,7 +37,8 @@ def cli():
     show_default=True,
     type=bool,
     is_flag=True,
-    help=INTERACTIVE_OPTION_HELP)
+    help=INTERACTIVE_OPTION_HELP
+)
 def view_annotations(annotations, interactive):
     if splitext(annotations)[1] == '.npy' and interactive is True:
         raise ValueError(
