@@ -50,7 +50,8 @@ def file_to_dask_array(
         import dask.array as da
 
         img = openslide.open_slide(path)
-        if type(img) is openslide.OpenSlide:
+        # TODO: use isinstance
+        if isinstance(img, openslide.OpenSlide):
             from openslide import deepzoom
             import dask.delayed
 
@@ -66,7 +67,10 @@ def file_to_dask_array(
             @dask.delayed(pure=True)
             def get_tile(level, column, row):
                 tile = gen.get_tile(level, (column, row))
-                return np.array(tile).transpose((1, 0, 2))
+                return dask.array.transpose(
+                    dask.array.from_array(np.array(tile)),
+                    axes=(1, 0, 2)
+                )
 
             sample_tile_shape = get_tile(max_level, 0, 0).shape.compute()
             rows = range(n_tiles_y - (0 if not remove_last else 1))
@@ -128,12 +132,12 @@ def xml_to_contours(xml_tree, contour_drawer):
                     float(vertex.get("Y")),
                     float(vertex.get("X"))
                 ])
-            else:  # contour_drawer is 'cv2'
+            else:  # contour_drawer == 'cv2'
                 coords.append([
                     float(vertex.get("X")),
                     float(vertex.get("Y"))
                 ])
-        # int32 dtype is necessary for cv2.drawContours
+        # np.int32 is necessary for cv2.drawContours
         contour = np.array(coords, dtype=np.int32)
         contours.append(contour)
     return contours
