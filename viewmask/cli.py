@@ -72,16 +72,16 @@ def view_annotations(annotations, interactive):
                 viewer.add_image(
                     rendered_annotations,
                     name='annotations',
+                    blending='additive',
                     is_pyramid=False,
-                    blending='additive'
                 )
             else:
                 rendered_annotations = xml_to_image(tree)
                 viewer.add_image(
                     rendered_annotations,
                     name='annotations',
+                    blending='additive',
                     is_pyramid=False,
-                    blending='additive'
                 )
             centers = centers_of_contours(
                 mask_to_contours(rendered_annotations))
@@ -89,7 +89,8 @@ def view_annotations(annotations, interactive):
                 centers_to_image(centers),
                 name='centers',
                 rgb=True,
-                blending='additive'
+                blending='additive',
+                is_pyramid=False,
             )
 
 
@@ -98,7 +99,7 @@ def view_annotations(annotations, interactive):
 def view_image(image):
     da_img = file_to_dask_array(image)
     with napari.gui_qt():
-        _ = napari.view_image(da_img, name='image')
+        _ = napari.view_image(da_img, name='image', is_pyramid=False)
 
 
 @cli.command(name='overlay')
@@ -125,7 +126,12 @@ def view_overlay(image, annotations, interactive):
     with napari.gui_qt():
         viewer = napari.Viewer()
 
-        viewer.add_image(da_img, name='image', blending='additive')
+        viewer.add_image(
+            da_img,
+            name='image',
+            blending='additive',
+            is_pyramid=False,
+        )
 
         if interactive:
             tree = ET.parse(annotations)
@@ -146,8 +152,8 @@ def view_overlay(image, annotations, interactive):
                 viewer.add_image(
                     rendered_annotations,
                     name='annotations',
+                    blending='additive',
                     is_pyramid=False,
-                    blending='additive'
                 )
             else:
                 tree = ET.parse(annotations)
@@ -155,8 +161,8 @@ def view_overlay(image, annotations, interactive):
                 viewer.add_image(
                     rendered_annotations,
                     name='annotations',
+                    blending='additive',
                     is_pyramid=False,
-                    blending='additive'
                 )
             centers = centers_of_contours(
                 mask_to_contours(rendered_annotations))
@@ -164,7 +170,8 @@ def view_overlay(image, annotations, interactive):
                 centers_to_image(centers),
                 name='centers',
                 rgb=True,
-                blending='additive'
+                blending='additive',
+                is_pyramid=False,
             )
 
 

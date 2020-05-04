@@ -153,15 +153,21 @@ def centers_of_contours(contours):
         ints, representing the X and Y coordinates, respectively. Each
         coordinate represents the center of the corresponding contour in
         `contours`. In this method, the center is defined as the centroid of
-        the contour.
+        the contour. If the centroid cannot be calculated, the circumcenter of
+        the center is used.
     """
     centers = []
     for contour in contours:
-        # centroid of contour:
         M = cv2.moments(contour)
-        center_x = int(M["m10"] / M["m00"])
-        center_y = int(M["m01"] / M["m00"])
-        centers.append((center_x, center_y))
+        if M["m00"] != 0:
+            # centroid of contour:
+            print(M)
+            center_x = M["m10"] / M["m00"]
+            center_y = M["m01"] / M["m00"]
+        else:
+            # circumcenter of contour:
+            (center_x, center_y), _ = cv2.minEnclosingCircle(contour)
+        centers.append((int(center_x), int(center_y)))
     return centers
 
 
