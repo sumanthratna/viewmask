@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.11 documentation</title>
+    <title>Welcome to viewmask’s documentation! &#8212; viewmask 0.1.12 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -119,7 +119,8 @@ representing the X and Y coordinates as integers, respectively.</p>
 ints, representing the X and Y coordinates, respectively. Each
 coordinate represents the center of the corresponding contour in
 <cite>contours</cite>. In this method, the center is defined as the centroid of
-the contour.</p>
+the contour. If the centroid cannot be calculated, the circumcenter of
+the center is used.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list of tuple of int</p>
