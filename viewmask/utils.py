@@ -10,19 +10,19 @@ def file_to_dask_array(
     remove_last=True,
     allow_unknown_chunksizes=False
 ):
-    """Convert SVS, TIF or TIFF to dask array.
+    """Load an image to a dask array.
 
     Parameters
     ----------
-    svs_file : str
-        Image file.
-    tile_size : int
+    path : str
+        The path to the image file as a string.
+    tile_size : int, optional
         Size of chunk to be read in.
-    overlap : int
+    overlap : int, optional
         Do not modify, overlap between neighboring tiles.
-    remove_last : bool
+    remove_last : bool, optional
         Remove last tile because it has a custom size.
-    allow_unknown_chunksizes : bool
+    allow_unknown_chunksizes : bool, optional
         Allow different chunk sizes, more flexible, but slowdown.
 
     Returns
@@ -32,35 +32,34 @@ def file_to_dask_array(
 
     Examples
     --------
-    >>> arr = svs2dask_array(
-    ...     path,
-    ...     tile_size=1000,
-    ...     overlap=0,
-    ...     remove_last=True,
-    ...     allow_unknown_chunksizes=False
-    ... )
-    >>> arr2 = arr.compute()
-    >>> arr3 = to_pil(cv2.resize(
-    ...     arr2,
+    >>> da_img = file_to_dask_array(path)
+    >>> npa_img = arr.compute()  # convert from dask array to numpy array
+    >>> pil_img = to_pil(cv2.resize(
+    ...     npa_img,
     ...     dsize=(1440, 700),
     ...     interpolation=cv2.INTER_CUBIC
     ... ))
-    >>> arr3.save(test_image_name)
+    >>> pil_img.save(test_image_name)
     """
-    import dask.array as da
-
     if path.endswith('.npy'):
+        import dask.array as da
+
         da.from_array(np.load(path))
     else:
         import openslide
+        import dask.array as da
 
         img = openslide.open_slide(path)
         if type(img) is openslide.OpenSlide:
             from openslide import deepzoom
-            import dask
+            import dask.delayed
 
             gen = deepzoom.DeepZoomGenerator(
-                img, tile_size=tile_size, overlap=overlap, limit_bounds=True)
+                img,
+                tile_size=tile_size,
+                overlap=overlap,
+                limit_bounds=True
+            )
             max_level = len(gen.level_dimensions) - 1
             n_tiles_x, n_tiles_y = gen.level_tiles[max_level]
 
@@ -125,11 +124,15 @@ def xml_to_contours(xml_tree, contour_drawer):
         for vertex in region:
             if contour_drawer == 'napari':
                 # convert each coordinate to (y, x) to transpose
-                coords.append(
-                    [float(vertex.get("Y")), float(vertex.get("X"))])
+                coords.append([
+                    float(vertex.get("Y")),
+                    float(vertex.get("X"))
+                ])
             else:  # contour_drawer is 'cv2'
-                coords.append(
-                    [float(vertex.get("X")), float(vertex.get("Y"))])
+                coords.append([
+                    float(vertex.get("X")),
+                    float(vertex.get("Y"))
+                ])
         # int32 dtype is necessary for cv2.drawContours
         contour = np.array(coords, dtype=np.int32)
         contours.append(contour)
@@ -161,7 +164,6 @@ def centers_of_contours(contours):
         M = cv2.moments(contour)
         if M["m00"] != 0:
             # centroid of contour:
-            print(M)
             center_x = M["m10"] / M["m00"]
             center_y = M["m01"] / M["m00"]
         else:
@@ -195,8 +197,11 @@ def xml_to_image(xml_tree, shape=(1000, 1000, 3)):
     rendered_annotations = np.zeros(shape, dtype=np.uint8)
     cv2.drawContours(rendered_annotations, contours, -1, [0, 255, 0])
     for contour in contours:
-        cv2.fillPoly(rendered_annotations, np.array(
-            [contour], dtype=np.int32), [230, 230, 230])
+        cv2.fillPoly(
+            rendered_annotations,
+            np.array([contour], dtype=np.int32),
+            [230, 230, 230]
+        )
     return rendered_annotations
 
 
@@ -278,7 +283,7 @@ def centers_to_image(centers, shape=(1000, 1000, 3), radius=4):
     -------
     rendered_annotations : numpy.ndarray
         An N-dimensional NumPy array representing the RGB output image with the
-        shape defined as `shape`.async
+        shape defined as `shape`.
     """
     rendered_annotations = np.zeros(shape, dtype=np.uint8)
     if rendered_annotations.ndim == 3:
