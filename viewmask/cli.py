@@ -41,14 +41,15 @@ def cli():
     help=INTERACTIVE_OPTION_HELP
 )
 def view_annotations(annotations, interactive):
-    if splitext(annotations)[1] == '.npy' and interactive is True:
+    annotations_are_npy = splitext(annotations)[1] == '.npy'
+    if annotations_are_npy and interactive is True:
         raise ValueError(
             "The interactive flag cannot be passed with a numpy mask.")
 
-    # TODO: get rid of this, some XMLs might actually be unparseable:
     try:
         tree = ET.parse(annotations)
     except ET.ParseError:
+        # TODO: don't just do nothing, some XMLs might actually be unparseable:
         pass
     with napari.gui_qt():
         viewer = napari.Viewer()
@@ -65,7 +66,7 @@ def view_annotations(annotations, interactive):
                 name='centers'
             )
         else:
-            if splitext(annotations)[1] == '.npy':
+            if annotations_are_npy:
                 rendered_annotations = np.load(annotations)
                 viewer.add_image(
                     rendered_annotations,
@@ -113,9 +114,8 @@ def view_image(image):
     help=INTERACTIVE_OPTION_HELP
 )
 def view_overlay(image, annotations, interactive):
-    # TODO: use assert?
-    # TODO: use annotations.endswith('.npy')?
-    if splitext(annotations)[1] == '.npy' and interactive is True:
+    annotations_are_npy = splitext(annotations)[1] == '.npy'
+    if annotations_are_npy and interactive is True:
         raise ValueError(
             "The interactive flag cannot be passed with a numpy mask.")
 
@@ -145,7 +145,7 @@ def view_overlay(image, annotations, interactive):
                 name='centers'
             )
         else:
-            if splitext(annotations)[1] == '.npy':
+            if annotations_are_npy:
                 rendered_annotations = np.load(annotations)
                 viewer.add_image(
                     rendered_annotations,

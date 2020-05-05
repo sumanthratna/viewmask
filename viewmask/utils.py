@@ -47,12 +47,11 @@ def file_to_dask_array(
         da.from_array(np.load(path))
     else:
         import openslide
-        import dask.array as da
 
         img = openslide.open_slide(path)
-        # TODO: use isinstance
         if isinstance(img, openslide.OpenSlide):
             from openslide import deepzoom
+            import dask.array as da
             import dask.delayed
 
             gen = deepzoom.DeepZoomGenerator(
@@ -66,9 +65,9 @@ def file_to_dask_array(
 
             @dask.delayed(pure=True)
             def get_tile(level, column, row):
-                tile = gen.get_tile(level, (column, row))
-                return dask.array.transpose(
-                    dask.array.from_array(np.array(tile)),
+                tile = gen.get_tile(level, (column, row))  # PIL.Image
+                return da.transpose(
+                    da.from_array(np.array(tile)),
                     axes=(1, 0, 2)
                 )
 

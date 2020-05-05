@@ -1,21 +1,13 @@
 __version__ = '0.1.12'
 
+from viewmask import utils  # noqa  # pylint: disable=unused-import
 
-from viewmask.utils import (
-    file_to_dask_array,
-    xml_to_contours,
-    centers_of_contours,
-    xml_to_image,
-    get_stroke_color,
-    mask_to_contours,
-    centers_to_image
-)
 __all__ = [
-    'file_to_dask_array',
-    'xml_to_contours',
-    'centers_of_contours',
-    'xml_to_image',
-    'get_stroke_color',
-    'mask_to_contours',
-    'centers_to_image'
+    'utils.file_to_dask_array',
+    'utils.xml_to_contours',
+    'utils.centers_of_contours',
+    'utils.xml_to_image',
+    'utils.get_stroke_color',
+    'utils.mask_to_contours',
+    'utils.centers_to_image'
 ]
