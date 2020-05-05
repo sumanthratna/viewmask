@@ -58,6 +58,17 @@ python-versions = "*"
 version = "0.1.0"
 
 [[package]]
+category = "main"
+description = "Caching mindful of computation/storage costs"
+name = "cachey"
+optional = false
+python-versions = ">=3.6"
+version = "0.2.1"
+
+[package.dependencies]
+heapdict = "*"
+
+[[package]]
 category = "dev"
 description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
@@ -168,12 +179,34 @@ python-versions = ">3.5"
 version = "0.7.3"
 
 [[package]]
+category = "main"
+description = "a heap with decrease-key and increase-key operations"
+name = "heapdict"
+optional = false
+python-versions = "*"
+version = "1.0.1"
+
+[[package]]
 category = "dev"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.9"
+
+[[package]]
+category = "main"
+description = "Image transformation, compression, and decompression codecs"
+name = "imagecodecs"
+optional = false
+python-versions = ">=3.6"
+version = "2020.2.18"
+
+[package.dependencies]
+numpy = ">=1.15"
+
+[package.extras]
+all = ["matplotlib (>=3.1)", "tifffile (>=2019.7.2)"]
 
 [[package]]
 category = "main"
@@ -381,30 +414,71 @@ description = "n-dimensional array viewer in Python."
 name = "napari"
 optional = false
 python-versions = ">=3.6"
-version = "0.2.12"
+version = "0.3.0"
 
 [package.dependencies]
 IPython = ">=7.7.0"
+Pillow = "<7.1.0 || >7.1.0,<7.1.1 || >7.1.1"
 PyOpenGL = ">=3.1.0"
+PyQt5 = ">=5.12.3"
 PySide2 = ">=5.12.3"
 backcall = ">=0.1.0"
+cachey = ">=0.2.1"
 fsspec = ">=0.3.3"
 imageio = ">=2.5.0"
 ipykernel = ">=5.1.1"
 jupyter-client = "<6.0.0"
+napari-plugin-engine = ">=0.1.4"
+napari-svg = ">=0.1.2"
 numpy = ">=1.10.0"
 numpydoc = ">=0.9.2"
-pluggy = ">=0.13.0"
+psutil = ">=5.0"
 qtconsole = ">=4.5.1"
 qtpy = ">=1.7.0"
-scikit-image = ">=0.15.0"
 scipy = ">=1.2.0"
+tifffile = ">=2020.2.16"
+toolz = ">=0.10.0"
 vispy = ">=0.6.4"
 wrapt = ">=1.11.1"
 
 [package.dependencies.dask]
 extras = ["array"]
 version = ">=2.1.0"
+
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = ">=1.5.0"
+
+[[package]]
+category = "main"
+description = "napari plugin engine, fork of pluggy"
+name = "napari-plugin-engine"
+optional = false
+python-versions = ">=3.6.*"
+version = "0.1.4"
+
+[package.dependencies]
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = ">=0.12"
+
+[package.extras]
+dev = ["pre-commit", "tox"]
+testing = ["pytest"]
+
+[[package]]
+category = "main"
+description = "A plugin for reading and writing svg files with napari"
+name = "napari-svg"
+optional = false
+python-versions = ">=3.6"
+version = "0.1.2"
+
+[package.dependencies]
+imageio = ">=2.5.0"
+napari-plugin-engine = ">=0.1.4"
+numpy = ">=1.10.0"
+vispy = ">=0.6.4"
 
 [[package]]
 category = "main"
@@ -541,7 +615,7 @@ six = ">=1.8"
 slicerator = ">=0.9.7"
 
 [[package]]
-category = "main"
+category = "dev"
 description = "plugin and hook calling mechanisms for python"
 name = "pluggy"
 optional = false
@@ -566,6 +640,17 @@ version = "3.0.3"
 
 [package.dependencies]
 wcwidth = "*"
+
+[[package]]
+category = "main"
+description = "Cross-platform lib for process and system monitoring in Python."
+name = "psutil"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "5.7.0"
+
+[package.extras]
+enum = ["enum34"]
 
 [[package]]
 category = "main"
@@ -607,6 +692,25 @@ name = "pyparsing"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.7"
+
+[[package]]
+category = "main"
+description = "Python bindings for the Qt cross platform application toolkit"
+name = "pyqt5"
+optional = false
+python-versions = ">=3.5"
+version = "5.14.2"
+
+[package.dependencies]
+PyQt5-sip = ">=12.7,<13"
+
+[[package]]
+category = "main"
+description = "The sip module support for PyQt5"
+name = "pyqt5-sip"
+optional = false
+python-versions = ">=3.5"
+version = "12.7.2"
 
 [[package]]
 category = "main"
@@ -923,6 +1027,21 @@ test = ["pytest"]
 
 [[package]]
 category = "main"
+description = "Read and write TIFF(r) files"
+name = "tifffile"
+optional = false
+python-versions = ">=3.6"
+version = "2020.2.16"
+
+[package.dependencies]
+imagecodecs = ">=2020.1.31"
+numpy = ">=1.15.1"
+
+[package.extras]
+all = ["matplotlib (>=3.1)"]
+
+[[package]]
+category = "main"
 description = "List processing tools and functional utilities"
 name = "toolz"
 optional = false
@@ -1020,7 +1139,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "8c0c9f2b8eac792663e953e7fd5fa94817a84f595ec2f8af00c98ffa782024b1"
+content-hash = "f7758e21bc5f55ea797f6d94c4532c5c4c12a387a3361ae94250b26bee7c99d0"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1047,6 +1166,10 @@ babel = [
 backcall = [
     {file = "backcall-0.1.0.tar.gz", hash = "sha256:38ecd85be2c1e78f77fd91700c76e14667dc21e2713b63876c0eb901196e01e4"},
     {file = "backcall-0.1.0.zip", hash = "sha256:bbbf4b1e5cd2bdb08f915895b51081c041bac22394fdfcfdfbe9f14b77c08bf2"},
+]
+cachey = [
+    {file = "cachey-0.2.1-py3-none-any.whl", hash = "sha256:49cf8528496ce3f99d47f1bd136b7c88237e55347a15d880f47cefc0615a83c3"},
+    {file = "cachey-0.2.1.tar.gz", hash = "sha256:0310ba8afe52729fa7626325c8d8356a8421c434bf887ac851e58dcf7cf056a6"},
 ]
 certifi = [
     {file = "certifi-2020.4.5.1-py2.py3-none-any.whl", hash = "sha256:1d987a998c75633c40847cc966fcf5904906c920a7f17ef374f5aa4282abd304"},
@@ -1096,9 +1219,37 @@ fsspec = [
     {file = "fsspec-0.7.3-py3-none-any.whl", hash = "sha256:9f0e3f4915b463b94c5788afa37b89d2c29c696f0d4da7d05f9cb5b17c8c84f7"},
     {file = "fsspec-0.7.3.tar.gz", hash = "sha256:1b540552c93b47e83c568e87507d6e02993e6d1b30bc7285f2336c81c5014103"},
 ]
+heapdict = [
+    {file = "HeapDict-1.0.1-py3-none-any.whl", hash = "sha256:6065f90933ab1bb7e50db403b90cab653c853690c5992e69294c2de2b253fc92"},
+    {file = "HeapDict-1.0.1.tar.gz", hash = "sha256:8495f57b3e03d8e46d5f1b2cc62ca881aca392fd5cc048dc0aa2e1a6d23ecdb6"},
+]
 idna = [
     {file = "idna-2.9-py2.py3-none-any.whl", hash = "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"},
     {file = "idna-2.9.tar.gz", hash = "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb"},
+]
+imagecodecs = [
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-macosx_10_13_intel.whl", hash = "sha256:286b87ee09506c35f099585e6b5ce245fb62c2a826aac4e0497cdfdfba631cc7"},
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-macosx_10_9_intel.whl", hash = "sha256:f6ac9dd40e1cdb72842fb72f147e8a51a1874c8f375629524566b388e841be20"},
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:c7367e01a199228b6526f05dc7fe7a85adac19f1b19e08a99edbdd2523cfcdc4"},
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:f6722cd6a73501c508b361f485259f172898d3cf2530e6de71f3e89394a0a713"},
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-manylinux2014_x86_64.whl", hash = "sha256:eedf5be2c9c65a0d92970bda98dfd7e9525c137e631e1956753bb6ce369b08f9"},
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-win32.whl", hash = "sha256:d1b0b2de7be918a8eada62c8d2339931381c86dbd43216a064e35ace5957e350"},
+    {file = "imagecodecs-2020.2.18-cp36-cp36m-win_amd64.whl", hash = "sha256:22f3c39755752fe3a91a92fcf24002ca57a51efca1ab99e9919cf783f90b4026"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-macosx_10_13_intel.whl", hash = "sha256:2bda6c7b13be73dfd202b3c23dc4b3003fdc02209835e348e4bd31ddca124d76"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-macosx_10_9_intel.whl", hash = "sha256:cf855a00bf5cb5a7cf1d608e7588ddc535d714e5422c3095dd811829b559f237"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:c5667d4b8e97cf10b3754f5e8159d60620cdd35052ffc298346273d42284430f"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:9742b392640c1b2d05c6aaad956bd7e3bf461c7e0f403f7b25ee464a5c949c8c"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-manylinux2014_x86_64.whl", hash = "sha256:2c130b89fcb70bab3aa57ee0671423ab0e053c6ff7ed26646bf425592fa3116d"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-win32.whl", hash = "sha256:adc09e5f9af6927eccc35d60ae1ec422cd9791cee4d5456d39af6903dff19477"},
+    {file = "imagecodecs-2020.2.18-cp37-cp37m-win_amd64.whl", hash = "sha256:fbdd0d42aa3c984377421767a892e77c40249870425aca0ba5629bdcd57d3ae4"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-macosx_10_13_x86_64.whl", hash = "sha256:6275213bd611156fa2fd73ce81b29ca708c4344d36fe3686f567cd104ccf4d18"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:6f63ae2592086b1abbd40b699816c054dc7aad616df2b14c2e15cd2372b77653"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:9a9abc5498121f0005fb00dfbed57a062337445d32a39569e4378286b503125b"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:91eb82b0167ff022a6a8dcf86e5871b635bfbe96801557e00d6b1e2a10ac25dd"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-manylinux2014_x86_64.whl", hash = "sha256:e0f3cfc2fc77c19118e173dca6af0dbed4a3cef75d3296762db687fd00fb7921"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-win32.whl", hash = "sha256:e8f460145258a28544d4119f58cab2daf87ac6653429ab9df7dff7d2cc30714f"},
+    {file = "imagecodecs-2020.2.18-cp38-cp38-win_amd64.whl", hash = "sha256:0538f7a4def1f6745b2d83d21883dcd61e82bc8faaca810e3a35e6b551b455d1"},
+    {file = "imagecodecs-2020.2.18.tar.gz", hash = "sha256:c019b19438dff31365fee3002b438992c16bc9955a036f466c600d80699cb5a2"},
 ]
 imageio = [
     {file = "imageio-2.8.0-py3-none-any.whl", hash = "sha256:1e4ab29b3775bb093c7a35854a0412857145450183344678829b30e72263b001"},
@@ -1214,7 +1365,15 @@ more-itertools = [
     {file = "more_itertools-8.2.0-py3-none-any.whl", hash = "sha256:5dd8bcf33e5f9513ffa06d5ad33d78f31e1931ac9a18f33d37e77a180d393a7c"},
 ]
 napari = [
-    {file = "napari-0.2.12.tar.gz", hash = "sha256:56d41f596587b0877d31936972b8c53eab5e070e39377e1b97270d71f211793c"},
+    {file = "napari-0.3.0-py3-none-any.whl", hash = "sha256:1440c0d9021cffff3728eaeae975f1fc8bcb5af259e46d1ef6c61531e23cd848"},
+    {file = "napari-0.3.0.tar.gz", hash = "sha256:7b6ffefcf42c7748cb46bd1d7e2ab59fccb2f96b9ce2f33cdb14250ee3f1b8cf"},
+]
+napari-plugin-engine = [
+    {file = "napari-plugin-engine-0.1.4.tar.gz", hash = "sha256:60da74d55be0c115c689d37f2ac4143bc1529e0810362e0f22149f3aeb39dba2"},
+    {file = "napari_plugin_engine-0.1.4-py2.py3-none-any.whl", hash = "sha256:5c5b0460d7043072cad3c79910d2054a0a916245b4fb2d641d1c391a9cd88040"},
+]
+napari-svg = [
+    {file = "napari-svg-0.1.2.tar.gz", hash = "sha256:c36ccabc1b07dd7e185e0c2a62198bee2d0e1e9673fcfe407c55fb0f2be8854e"},
 ]
 networkx = [
     {file = "networkx-2.4-py3-none-any.whl", hash = "sha256:cdfbf698749a5014bf2ed9db4a07a5295df1d3a53bf80bf3cbd61edf9df05fa1"},
@@ -1326,6 +1485,19 @@ prompt-toolkit = [
     {file = "prompt_toolkit-3.0.3-py3-none-any.whl", hash = "sha256:c93e53af97f630f12f5f62a3274e79527936ed466f038953dfa379d4941f651a"},
     {file = "prompt_toolkit-3.0.3.tar.gz", hash = "sha256:a402e9bf468b63314e37460b68ba68243d55b2f8c4d0192f85a019af3945050e"},
 ]
+psutil = [
+    {file = "psutil-5.7.0-cp27-none-win32.whl", hash = "sha256:298af2f14b635c3c7118fd9183843f4e73e681bb6f01e12284d4d70d48a60953"},
+    {file = "psutil-5.7.0-cp27-none-win_amd64.whl", hash = "sha256:75e22717d4dbc7ca529ec5063000b2b294fc9a367f9c9ede1f65846c7955fd38"},
+    {file = "psutil-5.7.0-cp35-cp35m-win32.whl", hash = "sha256:f344ca230dd8e8d5eee16827596f1c22ec0876127c28e800d7ae20ed44c4b310"},
+    {file = "psutil-5.7.0-cp35-cp35m-win_amd64.whl", hash = "sha256:e2d0c5b07c6fe5a87fa27b7855017edb0d52ee73b71e6ee368fae268605cc3f5"},
+    {file = "psutil-5.7.0-cp36-cp36m-win32.whl", hash = "sha256:a02f4ac50d4a23253b68233b07e7cdb567bd025b982d5cf0ee78296990c22d9e"},
+    {file = "psutil-5.7.0-cp36-cp36m-win_amd64.whl", hash = "sha256:1413f4158eb50e110777c4f15d7c759521703bd6beb58926f1d562da40180058"},
+    {file = "psutil-5.7.0-cp37-cp37m-win32.whl", hash = "sha256:d008ddc00c6906ec80040d26dc2d3e3962109e40ad07fd8a12d0284ce5e0e4f8"},
+    {file = "psutil-5.7.0-cp37-cp37m-win_amd64.whl", hash = "sha256:73f35ab66c6c7a9ce82ba44b1e9b1050be2a80cd4dcc3352cc108656b115c74f"},
+    {file = "psutil-5.7.0-cp38-cp38-win32.whl", hash = "sha256:60b86f327c198561f101a92be1995f9ae0399736b6eced8f24af41ec64fb88d4"},
+    {file = "psutil-5.7.0-cp38-cp38-win_amd64.whl", hash = "sha256:d84029b190c8a66a946e28b4d3934d2ca1528ec94764b180f7d6ea57b0e75e26"},
+    {file = "psutil-5.7.0.tar.gz", hash = "sha256:685ec16ca14d079455892f25bd124df26ff9137664af445563c1bd36629b5e0e"},
+]
 ptyprocess = [
     {file = "ptyprocess-0.6.0-py2.py3-none-any.whl", hash = "sha256:d7cc528d76e76342423ca640335bd3633420dc1366f258cb31d05e865ef5ca1f"},
     {file = "ptyprocess-0.6.0.tar.gz", hash = "sha256:923f299cc5ad920c68f2bc0bc98b75b9f838b93b599941a6b63ddbc2476394c0"},
@@ -1346,6 +1518,32 @@ pyopengl = [
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
+]
+pyqt5 = [
+    {file = "PyQt5-5.14.2-5.14.2-cp35.cp36.cp37.cp38-abi3-macosx_10_6_intel.whl", hash = "sha256:a9bdc46ab1f6397770e6b8dca84ac07a0250d26b1a31587f25619cf31a075532"},
+    {file = "PyQt5-5.14.2-5.14.2-cp35.cp36.cp37.cp38-abi3-manylinux2014_x86_64.whl", hash = "sha256:ee168a486c9a758511568147815e2959652cd0aabea832fa5e87cf6b241d2180"},
+    {file = "PyQt5-5.14.2-5.14.2-cp35.cp36.cp37.cp38-none-win32.whl", hash = "sha256:f61ddc78547d6ca763323ccd4a9e374c71b29feda1f5ce2d3e91e4f8d2cf1942"},
+    {file = "PyQt5-5.14.2-5.14.2-cp35.cp36.cp37.cp38-none-win_amd64.whl", hash = "sha256:3b91dd1d0cbfaea85ad057247ba621187e511434b0c9d6d40de69fd5e833b109"},
+    {file = "PyQt5-5.14.2.tar.gz", hash = "sha256:bd230c6fd699eabf1ceb51e13a8b79b74c00a80272c622427b80141a22269eb0"},
+]
+pyqt5-sip = [
+    {file = "PyQt5_sip-12.7.2-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:df4f5cdb86f47df5f6fc35be29cc45df7b5a2c171d07dbf377d558b226554ea3"},
+    {file = "PyQt5_sip-12.7.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:360de29634e2ce1df84d2b588bd8c1a29b768f3a5225869d63adb03bc21bd32a"},
+    {file = "PyQt5_sip-12.7.2-cp35-cp35m-win32.whl", hash = "sha256:31c74602ccd6b70e4352550eb41aa980dc1d6009444f3c8eb1b844e84bd144cf"},
+    {file = "PyQt5_sip-12.7.2-cp35-cp35m-win_amd64.whl", hash = "sha256:168a6d700daf366b7cf255a8cabf8d07bfe2294859e6b3b2636c36c2f89265c9"},
+    {file = "PyQt5_sip-12.7.2-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:b68cfe632a512c0551e8860f35c1fcab5cd1ad5e168b4814fddd88121f447b0a"},
+    {file = "PyQt5_sip-12.7.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:b068f4791e97427d82a27e7df28cc3ee33f7e4353f48ed6a123f8cdba44266b2"},
+    {file = "PyQt5_sip-12.7.2-cp36-cp36m-win32.whl", hash = "sha256:9dd5769e83e64d017d02981563c8159d825425b6c4998c937a880888f4dcb7a3"},
+    {file = "PyQt5_sip-12.7.2-cp36-cp36m-win_amd64.whl", hash = "sha256:16a9a4daf85bfaa3aec35237ff28d8773a3ec937d9f8dc7fc3db7716de42d4a9"},
+    {file = "PyQt5_sip-12.7.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:3cb9076ba0e574b2f026759103eb0e12051128714f5aa136cca53229d3ad72d1"},
+    {file = "PyQt5_sip-12.7.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:65fceeea2ac738a92f7e3e459ece1b4e2fbf49fd1d6b732a73d0d4bcfc434452"},
+    {file = "PyQt5_sip-12.7.2-cp37-cp37m-win32.whl", hash = "sha256:11f8cc2de287c3457fee53e781f06fb71f04251e7ae408ed22696ed65fd2bcf4"},
+    {file = "PyQt5_sip-12.7.2-cp37-cp37m-win_amd64.whl", hash = "sha256:85e68b8936f1756060ddcb3ef0a84af78ce89993fa6594b3049a0eca53d6d2fa"},
+    {file = "PyQt5_sip-12.7.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:4f87d59d29ca1c5a4005bbec27af002be787210dc5f8f87fe5d747883a836083"},
+    {file = "PyQt5_sip-12.7.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:b34c1f227a8f8e97059f20e5424f117f66a302b42e34d4039158494c6371b1ce"},
+    {file = "PyQt5_sip-12.7.2-cp38-cp38-win32.whl", hash = "sha256:01919371d32b26208b2f0318f1e15680d3aa60d1ced1812a5dac8bdb483fea69"},
+    {file = "PyQt5_sip-12.7.2-cp38-cp38-win_amd64.whl", hash = "sha256:a8a6c0512641fc042726b6253b2d5f3f3f800098334d198d8ebdf337d85ab3d7"},
+    {file = "PyQt5_sip-12.7.2.tar.gz", hash = "sha256:16a19b9f36985b8bff30b89fb8859d831713dd528fba5600563e36ff077960a2"},
 ]
 pyside2 = [
     {file = "PySide2-5.13.2-5.13.2-cp27-cp27m-macosx_10_12_intel.whl", hash = "sha256:ede8ed6e7021232184829d16614eb153f188ea250862304eac35e04b2bd0120c"},
@@ -1537,6 +1735,10 @@ sphinxcontrib-qthelp = [
 sphinxcontrib-serializinghtml = [
     {file = "sphinxcontrib-serializinghtml-1.1.4.tar.gz", hash = "sha256:eaa0eccc86e982a9b939b2b82d12cc5d013385ba5eadcc7e4fed23f4405f77bc"},
     {file = "sphinxcontrib_serializinghtml-1.1.4-py2.py3-none-any.whl", hash = "sha256:f242a81d423f59617a8e5cf16f5d4d74e28ee9a66f9e5b637a18082991db5a9a"},
+]
+tifffile = [
+    {file = "tifffile-2020.2.16-py3-none-any.whl", hash = "sha256:0439b63efcda551dc1bfd126fcd6cd2b3f60e98d7d165e3aedc5df637b71382f"},
+    {file = "tifffile-2020.2.16.tar.gz", hash = "sha256:f03b03c4863d232e746859ebdf36e3dfd974364d9944d884bc82b430b0d7290d"},
 ]
 toolz = [
     {file = "toolz-0.10.0.tar.gz", hash = "sha256:08fdd5ef7c96480ad11c12d472de21acd32359996f69a5259299b540feba4560"},

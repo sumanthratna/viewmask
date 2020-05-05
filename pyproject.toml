@@ -10,14 +10,15 @@ documentation = "https://viewmask.readthedocs.io/en/latest/"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-click = "^7.1.1"
-napari = "^0.2.12"
-Pillow = "^7.0.0"
-numpy = "^1.18.1"
+click = "^7.1.2"
+napari = "^0.3.0"
+Pillow = "^7.1.2"
+numpy = "^1.18.4"
 opencv-python-headless = "^4.2.0"
 openslide-python = "^1.1.1"
 dask-image = "^0.2.0"
 toolz = "^0.10.0"
+scikit-image = "^0.16.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
