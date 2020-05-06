@@ -1032,10 +1032,10 @@ description = "Read and write TIFF(r) files"
 name = "tifffile"
 optional = false
 python-versions = ">=3.6"
-version = "2020.2.16"
+version = "2020.5.5"
 
 [package.dependencies]
-imagecodecs = ">=2020.1.31"
+imagecodecs = ">=2020.2.18"
 numpy = ">=1.15.1"
 
 [package.extras]
@@ -1738,8 +1738,8 @@ sphinxcontrib-serializinghtml = [
     {file = "sphinxcontrib_serializinghtml-1.1.4-py2.py3-none-any.whl", hash = "sha256:f242a81d423f59617a8e5cf16f5d4d74e28ee9a66f9e5b637a18082991db5a9a"},
 ]
 tifffile = [
-    {file = "tifffile-2020.2.16-py3-none-any.whl", hash = "sha256:0439b63efcda551dc1bfd126fcd6cd2b3f60e98d7d165e3aedc5df637b71382f"},
-    {file = "tifffile-2020.2.16.tar.gz", hash = "sha256:f03b03c4863d232e746859ebdf36e3dfd974364d9944d884bc82b430b0d7290d"},
+    {file = "tifffile-2020.5.5-py3-none-any.whl", hash = "sha256:4d9e2baaf30a78c03991ee4498bf81640171dacb9b4e305aa4a8f0872b917296"},
+    {file = "tifffile-2020.5.5.tar.gz", hash = "sha256:d1d88ce3e74ffa367754a580c40b73e65d4a5c8dc37d7862daaeb72502879fda"},
 ]
 toolz = [
     {file = "toolz-0.10.0.tar.gz", hash = "sha256:08fdd5ef7c96480ad11c12d472de21acd32359996f69a5259299b540feba4560"},

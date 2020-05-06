@@ -54,7 +54,7 @@ def view_annotations(annotations, interactive):
     with napari.gui_qt():
         viewer = napari.Viewer()
         if interactive:
-            regions = xml_to_contours(tree, 'napari')
+            regions = xml_to_contours(tree, transpose=True)
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
                 regions,
@@ -133,7 +133,7 @@ def view_overlay(image, annotations, interactive):
 
         if interactive:
             tree = ET.parse(annotations)
-            regions = xml_to_contours(tree, 'napari')
+            regions = xml_to_contours(tree, transpose=True)
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
                 regions,

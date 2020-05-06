@@ -94,17 +94,17 @@ def file_to_dask_array(
             return dask_image.imread.imread(path)
 
 
-def xml_to_contours(xml_tree, contour_drawer):
+def xml_to_contours(xml_tree, transpose=False):
     """Extract contours from a TCGA XML annotations file.
 
     Parameters
     ----------
     xml_tree : xml.etree.ElementTree
         The XML tree of the TCGA annotations file.
-    contour_drawer : {'napari', 'cv2'}
-        If `contour_drawer` is `'napari'` then the contours will be transposed
-        over its main diagonal. When `contour_drawer` is `'cv2'`, no changes
-        will be made to the returned contours.
+    transpose : bool, optional
+        Whether to transpose the image over its main diagonal. This is done by
+        reverting the x and y coordinates. Set this to True if you will pass
+        these contours to a napari layer.
 
     Returns
     -------
@@ -118,20 +118,18 @@ def xml_to_contours(xml_tree, contour_drawer):
     The main diagonal is defined as the line that connects the top-left corner
     and the bottom right corner.
     """
-    if contour_drawer not in ['napari', 'cv2']:
-        raise ValueError("contour_drawer must be 'cv2' or 'napari'")
     root = xml_tree.getroot()
     contours = []
     for region in root.iter("Vertices"):
         coords = []
         for vertex in region:
-            if contour_drawer == 'napari':
+            if transpose:
                 # convert each coordinate to (y, x) to transpose
                 coords.append([
                     float(vertex.get("Y")),
                     float(vertex.get("X"))
                 ])
-            else:  # contour_drawer == 'cv2'
+            else:
                 coords.append([
                     float(vertex.get("X")),
                     float(vertex.get("Y"))
@@ -196,7 +194,7 @@ def xml_to_image(xml_tree, shape=(1000, 1000, 3)):
         An N-dimensional NumPy array representing the RGB output image with the
         shape defined as `shape`.
     """
-    contours = xml_to_contours(xml_tree, 'cv2')
+    contours = xml_to_contours(xml_tree, transpose=False)
     rendered_annotations = np.zeros(shape, dtype=np.uint8)
     cv2.drawContours(rendered_annotations, contours, -1, [0, 255, 0])
     for contour in contours:
