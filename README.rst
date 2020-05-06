@@ -4,6 +4,7 @@ A Python package and CLI to view XML annotations and NumPy masks.
 
 |PyPI version fury.io|
 |PyPI downloads|
+|HitCount|
 |Documentation Status|
 |Travis build|
 |PyPI license|
@@ -13,6 +14,9 @@ A Python package and CLI to view XML annotations and NumPy masks.
 
 .. |PyPI downloads| image:: https://img.shields.io/pypi/dm/viewmask
    :target: https://pypistats.org/packages/viewmask
+
+.. |HitCount| image:: https://hits.dwyl.com/sumanthratna/viewmask.svg
+   :target: https://hits.dwyl.com/sumanthratna/viewmask
 
 .. |Documentation Status| image:: https://readthedocs.org/projects/viewmask/badge/?version=latest
    :target: https://viewmask.readthedocs.io/?badge=latest
