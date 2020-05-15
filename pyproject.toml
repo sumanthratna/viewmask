@@ -18,7 +18,7 @@ opencv-python-headless = "^4.2.0"
 openslide-python = "^1.1.1"
 dask-image = "^0.2.0"
 toolz = "^0.10.0"
-scikit-image = "^0.16.2"
+scikit-image = ">=0.16.2,<0.18.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
