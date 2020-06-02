@@ -44,7 +44,7 @@ def file_to_dask_array(
     if path.endswith('.npy'):
         import dask.array as da
 
-        da.from_array(np.load(path))
+        return da.from_array(np.load(path))
     else:
         import openslide
 
