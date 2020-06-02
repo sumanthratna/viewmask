@@ -1,4 +1,4 @@
-__version__ = '0.1.13'
+__version__ = '0.1.14'
 
 from viewmask import utils  # noqa  # pylint: disable=unused-import
 

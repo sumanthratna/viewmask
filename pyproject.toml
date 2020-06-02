@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "viewmask"
-version = "0.1.13"
+version = "0.1.14"
 description = "A Python package and CLI to view XML annotations and NumPy masks."
 license = "MIT"
 authors = ["sumanthratna <sumanthratna@gmail.com>"]
