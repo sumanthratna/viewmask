@@ -123,6 +123,14 @@ version = "2.17.2"
 [package.dependencies]
 pyyaml = "*"
 
+[package.dependencies.numpy]
+optional = true
+version = ">=1.13.0"
+
+[package.dependencies.toolz]
+optional = true
+version = ">=0.8.2"
+
 [package.extras]
 array = ["numpy (>=1.13.0)", "toolz (>=0.8.2)"]
 bag = ["cloudpickle (>=0.2.2)", "fsspec (>=0.6.0)", "toolz (>=0.8.2)", "partd (>=0.3.10)"]
@@ -172,14 +180,6 @@ name = "freetype-py"
 optional = false
 python-versions = "*"
 version = "2.1.0.post1"
-
-[[package]]
-category = "main"
-description = "File-system specification"
-name = "fsspec"
-optional = false
-python-versions = ">3.5"
-version = "0.7.4"
 
 [[package]]
 category = "main"
@@ -398,21 +398,18 @@ version = "8.3.0"
 
 [[package]]
 category = "main"
-description = "n-dimensional array viewer in Python."
+description = "n-dimensional array viewer in Python"
 name = "napari"
 optional = false
 python-versions = ">=3.6"
-version = "0.3.3"
+version = "0.3.4"
 
 [package.dependencies]
 IPython = ">=7.7.0"
 Pillow = "<7.1.0 || >7.1.0,<7.1.1 || >7.1.1"
 PyOpenGL = ">=3.1.0"
-PySide2 = ">=5.12.3,<5.15"
 PyYAML = ">=5.1"
-backcall = ">=0.1.0"
 cachey = ">=0.2.1"
-fsspec = ">=0.3.3"
 imageio = ">=2.5.0"
 ipykernel = ">=5.1.1"
 napari-plugin-engine = ">=0.1.5"
@@ -435,6 +432,11 @@ version = ">=2.1.0"
 [package.dependencies.importlib-metadata]
 python = "<3.8"
 version = ">=1.5.0"
+
+[package.extras]
+all = ["PyQt5 (>=5.12.3,<5.15.0)"]
+pyqt5 = ["PyQt5 (>=5.12.3,<5.15.0)"]
+pyside2 = ["PySide2 (>=5.12.3,<5.15.0)"]
 
 [[package]]
 category = "main"
@@ -685,17 +687,6 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.7"
 
 [[package]]
-category = "main"
-description = "Python bindings for the Qt cross-platform application and UI framework"
-name = "pyside2"
-optional = false
-python-versions = "*"
-version = "5.13.2"
-
-[package.dependencies]
-shiboken2 = "5.13.2"
-
-[[package]]
 category = "dev"
 description = "pytest: simple powerful testing with Python"
 name = "pytest"
@@ -857,14 +848,6 @@ version = "1.4.1"
 
 [package.dependencies]
 numpy = ">=1.13.3"
-
-[[package]]
-category = "main"
-description = "Python / C++ bindings helper module"
-name = "shiboken2"
-optional = false
-python-versions = "*"
-version = "5.13.2"
 
 [[package]]
 category = "main"
@@ -1197,10 +1180,6 @@ freetype-py = [
     {file = "freetype_py-2.1.0.post1-py2.py3-none-win32.whl", hash = "sha256:d179759b245bb01f5603acd071aea99d97d993a28c4e71fdc4bd7530c49931f9"},
     {file = "freetype_py-2.1.0.post1-py2.py3-none-win_amd64.whl", hash = "sha256:eda77d57acdfe74d1cf3958b5fb5aaea21a2866f4e8d7632c06123d6014f9e0c"},
 ]
-fsspec = [
-    {file = "fsspec-0.7.4-py3-none-any.whl", hash = "sha256:1f9391c9b6e92a89949f0b0f7154b8b62a01f00b9c2767797d94ffa376dae9ab"},
-    {file = "fsspec-0.7.4.tar.gz", hash = "sha256:7075fde6d617cd3a97eac633d230d868121a188a46d16a0dcb484eea0cf2b955"},
-]
 heapdict = [
     {file = "HeapDict-1.0.1-py3-none-any.whl", hash = "sha256:6065f90933ab1bb7e50db403b90cab653c853690c5992e69294c2de2b253fc92"},
     {file = "HeapDict-1.0.1.tar.gz", hash = "sha256:8495f57b3e03d8e46d5f1b2cc62ca881aca392fd5cc048dc0aa2e1a6d23ecdb6"},
@@ -1323,7 +1302,8 @@ more-itertools = [
     {file = "more_itertools-8.3.0-py3-none-any.whl", hash = "sha256:7818f596b1e87be009031c7653d01acc46ed422e6656b394b0f765ce66ed4982"},
 ]
 napari = [
-    {file = "napari-0.3.3.tar.gz", hash = "sha256:e57b65d77f0f2e91c15054f58e1e1d90a81c70d21647b2a38eaa507bbaf7280a"},
+    {file = "napari-0.3.4-py3-none-any.whl", hash = "sha256:2b01ece91ff4f14af12efe164035f1f684f30394a88a7ec490c9c1e76648da16"},
+    {file = "napari-0.3.4.tar.gz", hash = "sha256:23c0a0dde1337726e1913b674fc181c5f00381276fc706137879d7ad1bd86d89"},
 ]
 napari-plugin-engine = [
     {file = "napari-plugin-engine-0.1.5.tar.gz", hash = "sha256:7f53434753fb0726981c818af11fc2f71907371d348b8a87ce8fc0feeda68f76"},
@@ -1489,14 +1469,6 @@ pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
-pyside2 = [
-    {file = "PySide2-5.13.2-5.13.2-cp27-cp27m-macosx_10_12_intel.whl", hash = "sha256:ede8ed6e7021232184829d16614eb153f188ea250862304eac35e04b2bd0120c"},
-    {file = "PySide2-5.13.2-5.13.2-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:63cc845434388b398b79b65f7b5312b9b5348fbc772d84092c9245efbf341197"},
-    {file = "PySide2-5.13.2-5.13.2-cp35.cp36.cp37-abi3-macosx_10_12_intel.whl", hash = "sha256:ed6d22c7a3a99f480d4c9348bcced97ef7bc0c9d353ad3665ae705e8eb61feb5"},
-    {file = "PySide2-5.13.2-5.13.2-cp35.cp36.cp37-abi3-manylinux1_x86_64.whl", hash = "sha256:7c57fe60ed57a3a8b95d9163abca9caa803a1470f29b40bff8ef4103b97a96c8"},
-    {file = "PySide2-5.13.2-5.13.2-cp35.cp36.cp37-none-win32.whl", hash = "sha256:7c61a6883f3474939097b9dabc80f028887046be003ce416da1b3565a08d1f92"},
-    {file = "PySide2-5.13.2-5.13.2-cp35.cp36.cp37-none-win_amd64.whl", hash = "sha256:589b90944c24046d31bf76694590a600d59d20130015086491b793a81753629a"},
-]
 pytest = [
     {file = "pytest-5.4.2-py3-none-any.whl", hash = "sha256:95c710d0a72d91c13fae35dce195633c929c3792f54125919847fdcdf7caa0d3"},
     {file = "pytest-5.4.2.tar.gz", hash = "sha256:eb2b5e935f6a019317e455b6da83dd8650ac9ffd2ee73a7b657a30873d67a698"},
@@ -1638,14 +1610,6 @@ scipy = [
     {file = "scipy-1.4.1-cp38-cp38-win32.whl", hash = "sha256:cc971a82ea1170e677443108703a2ec9ff0f70752258d0e9f5433d00dda01f59"},
     {file = "scipy-1.4.1-cp38-cp38-win_amd64.whl", hash = "sha256:2cce3f9847a1a51019e8c5b47620da93950e58ebc611f13e0d11f4980ca5fecb"},
     {file = "scipy-1.4.1.tar.gz", hash = "sha256:dee1bbf3a6c8f73b6b218cb28eed8dd13347ea2f87d572ce19b289d6fd3fbc59"},
-]
-shiboken2 = [
-    {file = "shiboken2-5.13.2-5.13.2-cp27-cp27m-macosx_10_12_intel.whl", hash = "sha256:7c766c4160636a238e0e4430e2f40b504b13bcc4951902eb78cd5c971f26c898"},
-    {file = "shiboken2-5.13.2-5.13.2-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:e6543506cb353d417961b9ec3c6fc726ec2f72eeab609dc88943c2e5cb6d6408"},
-    {file = "shiboken2-5.13.2-5.13.2-cp35.cp36.cp37-abi3-macosx_10_12_intel.whl", hash = "sha256:ca08a3c95b1b20ac2b243b7b06379609bd73929dbc27b28c01415feffe3bcea1"},
-    {file = "shiboken2-5.13.2-5.13.2-cp35.cp36.cp37-abi3-manylinux1_x86_64.whl", hash = "sha256:81fa9b288c6c4b4c91220fcca2002eadb48fc5c3238e8bd88e982e00ffa77c53"},
-    {file = "shiboken2-5.13.2-5.13.2-cp35.cp36.cp37-none-win32.whl", hash = "sha256:e2f72b5cfdb8b48bdb55bda4b42ec7d36d1bce0be73d6d7d4a358225d6fb5f25"},
-    {file = "shiboken2-5.13.2-5.13.2-cp35.cp36.cp37-none-win_amd64.whl", hash = "sha256:5e84a4b4e7ab08bb5db0a8168e5d0316fbf3c25b788012701a82079faadfb19b"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
