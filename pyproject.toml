@@ -21,7 +21,7 @@ toolz = "^0.10.0"
 scikit-image = "^0.17.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^5.4"
 sphinx = "^3.0.3"
 sphinx-click = "^2.3.2"
 
