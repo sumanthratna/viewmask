@@ -123,6 +123,14 @@ version = "2.17.2"
 [package.dependencies]
 pyyaml = "*"
 
+[package.dependencies.numpy]
+optional = true
+version = ">=1.13.0"
+
+[package.dependencies.toolz]
+optional = true
+version = ">=0.8.2"
+
 [package.extras]
 array = ["numpy (>=1.13.0)", "toolz (>=0.8.2)"]
 bag = ["cloudpickle (>=0.2.2)", "fsspec (>=0.6.0)", "toolz (>=0.8.2)", "partd (>=0.3.10)"]
@@ -137,8 +145,8 @@ category = "main"
 description = "Distributed image processing"
 name = "dask-image"
 optional = false
-python-versions = "*"
-version = "0.2.0"
+python-versions = ">=3.5"
+version = "0.3.0"
 
 [package.dependencies]
 numpy = ">=1.11.3"
@@ -1121,7 +1129,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "9a08b4f300064e35694db0247f9cd26a4694fc83b14e3e5ba1e6d87f97f425b6"
+content-hash = "4db3b10b98c5b673fd7061e4bddd4aa4371dd643af2842cd6ec3d76d0e1b22e7"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1178,7 +1186,7 @@ dask = [
     {file = "dask-2.17.2.tar.gz", hash = "sha256:76a877a4ff6f774dc1378ee215e58519f7894f48584984e7a3d0715b2d96d9d2"},
 ]
 dask-image = [
-    {file = "dask-image-0.2.0.tar.gz", hash = "sha256:bece2ea347f963dc0168c7d5fdfd11e51b47d9c857d3bc56144d7c146964a23f"},
+    {file = "dask-image-0.3.0.tar.gz", hash = "sha256:603f9ddf59e4c69b8bdafcd5eadc99768160fb05cdcb78d14160c4533cf25b97"},
 ]
 decorator = [
     {file = "decorator-4.4.2-py2.py3-none-any.whl", hash = "sha256:41fa54c2a0cc4ba648be4fd43cff00aedf5b9465c9bf18d64325bc225f08f760"},
