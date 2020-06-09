@@ -123,6 +123,14 @@ version = "2.17.2"
 [package.dependencies]
 pyyaml = "*"
 
+[package.dependencies.numpy]
+optional = true
+version = ">=1.13.0"
+
+[package.dependencies.toolz]
+optional = true
+version = ">=0.8.2"
+
 [package.extras]
 array = ["numpy (>=1.13.0)", "toolz (>=0.8.2)"]
 bag = ["cloudpickle (>=0.2.2)", "fsspec (>=0.6.0)", "toolz (>=0.8.2)", "partd (>=0.3.10)"]
@@ -899,7 +907,7 @@ description = "Python documentation generator"
 name = "sphinx"
 optional = false
 python-versions = ">=3.5"
-version = "3.0.4"
+version = "3.1.0"
 
 [package.dependencies]
 Jinja2 = ">=2.3"
@@ -922,7 +930,7 @@ sphinxcontrib-serializinghtml = "*"
 
 [package.extras]
 docs = ["sphinxcontrib-websupport"]
-lint = ["flake8 (>=3.5.0)", "flake8-import-order", "mypy (>=0.770)", "docutils-stubs"]
+lint = ["flake8 (>=3.5.0)", "flake8-import-order", "mypy (>=0.780)", "docutils-stubs"]
 test = ["pytest", "pytest-cov", "html5lib", "typed-ast", "cython"]
 
 [[package]]
@@ -1121,7 +1129,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "9a08b4f300064e35694db0247f9cd26a4694fc83b14e3e5ba1e6d87f97f425b6"
+content-hash = "c133a96bf10cc1abfefef2a76c970942ec9cb6f1fe270ae2707d805e000ec96e"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1660,8 +1668,8 @@ snowballstemmer = [
     {file = "snowballstemmer-2.0.0.tar.gz", hash = "sha256:df3bac3df4c2c01363f3dd2cfa78cce2840a79b9f1c2d2de9ce8d31683992f52"},
 ]
 sphinx = [
-    {file = "Sphinx-3.0.4-py3-none-any.whl", hash = "sha256:779a519adbd3a70fc7c468af08c5e74829868b0a5b34587b33340e010291856c"},
-    {file = "Sphinx-3.0.4.tar.gz", hash = "sha256:ea64df287958ee5aac46be7ac2b7277305b0381d213728c3a49d8bb9b8415807"},
+    {file = "Sphinx-3.1.0-py3-none-any.whl", hash = "sha256:7d3d5087e39ab5a031b75588e9859f011de70e213cd0080ccbc28079fb0786d1"},
+    {file = "Sphinx-3.1.0.tar.gz", hash = "sha256:1c445320a3310baa5ccb8d957267ef4a0fc930dc1234db5098b3d7af14fbb242"},
 ]
 sphinx-click = [
     {file = "sphinx-click-2.3.2.tar.gz", hash = "sha256:1b649ebe9f7a85b78ef6545d1dc258da5abca850ac6375be104d484a6334a728"},
