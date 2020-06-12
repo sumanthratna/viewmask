@@ -98,7 +98,7 @@ def view_annotations(annotations, interactive):
 def view_image(image):
     da_img = file_to_dask_array(image)
     with napari.gui_qt():
-        _ = napari.view_image(da_img, name='image', multiscale=False)
+        napari.view_image(da_img, name='image', multiscale=False)
 
 
 @cli.command(name='overlay')
