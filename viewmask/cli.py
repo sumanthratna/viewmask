@@ -74,6 +74,12 @@ def view_annotations(annotations, interactive):
                 from dask.array import squeeze
                 rendered_annotations = squeeze(file_to_dask_array(annotations))
             elif annotations_ext == '.xml':
+                try:
+                    tree = ET.parse(annotations)
+                except ET.ParseError:
+                    # TODO: don't just do nothing, some XMLs might actually be
+                    # unparseable
+                    pass
                 rendered_annotations = xml_to_image(tree)
             else:
                 # TODO: raise ValueError
@@ -84,8 +90,20 @@ def view_annotations(annotations, interactive):
                 blending='additive',
                 multiscale=False,
             )
-            centers = centers_of_contours(
-                mask_to_contours(rendered_annotations))
+            from cv2 import inRange as select_color, countNonZero
+            mask = select_color(  # select pure blue
+                rendered_annotations if isinstance(rendered_annotations,
+                                                   np.ndarray) \
+                else rendered_annotations.compute(),
+                np.array([0, 0, 255]),
+                np.array([0, 0, 255])
+            )
+            if countNonZero(mask) == 0:
+                # TODO: it'd be nice if we could check this before computing
+                # the blue-based nuclei mask. the current flow control seems
+                # unintuitive
+                mask = rendered_annotations
+            centers = centers_of_contours(mask_to_contours(mask))
             viewer.add_image(
                 centers_to_image(centers),
                 name='centers',
@@ -159,6 +177,12 @@ def view_overlay(image, annotations, interactive):
                 from dask.array import squeeze
                 rendered_annotations = squeeze(file_to_dask_array(annotations))
             elif annotations_ext == '.xml':
+                try:
+                    tree = ET.parse(annotations)
+                except ET.ParseError:
+                    # TODO: don't just do nothing, some XMLs might actually be
+                    # unparseable
+                    pass
                 rendered_annotations = xml_to_image(tree)
             else:
                 # TODO: raise ValueError
@@ -169,9 +193,20 @@ def view_overlay(image, annotations, interactive):
                 blending='additive',
                 multiscale=False,
             )
-            print(rendered_annotations)
-            centers = centers_of_contours(
-                mask_to_contours(rendered_annotations))
+            from cv2 import inRange as select_color, countNonZero
+            mask = select_color(  # select pure blue
+                rendered_annotations if isinstance(rendered_annotations,
+                                                   np.ndarray) \
+                else rendered_annotations.compute(),
+                np.array([0, 0, 255]),
+                np.array([0, 0, 255])
+            )
+            if countNonZero(mask) == 0:
+                # TODO: it'd be nice if we could check this before computing
+                # the blue-based nuclei mask. the current flow control seems
+                # unintuitive
+                mask = rendered_annotations
+            centers = centers_of_contours(mask_to_contours(mask))
             viewer.add_image(
                 centers_to_image(centers),
                 name='centers',

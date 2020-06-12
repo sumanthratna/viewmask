@@ -264,8 +264,8 @@ def mask_to_contours(mask):
     return contours
 
 
-def centers_to_image(centers, shape=(1000, 1000, 3), radius=4):
-    """Determine the line color for annotations from a TCGA annotations file.
+def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
+    """Draw coordinates of centers to a static image.
 
     Parameters
     ----------
@@ -274,14 +274,12 @@ def centers_to_image(centers, shape=(1000, 1000, 3), radius=4):
         ints, representing the X and Y coordinates, respectively. Each
         coordinate represents the center of the corresponding contour in
         `contours`.
-    shape : tuple of int, optional
-        The shape of the mask. `shape` defaults to `(1000, 1000, 3)`, since
-        most images in the TCGA dataset have a height and width of 1000 pixels
-        and have 3 channels (red, green, and blue). If `shape` provides a 3rd
-        value with value 3, the centers will be drawn in red; otherwise, if
-        shape has only 2 values, the centers will be drawn in white.
     radius : int, optional
         The radius of each center, defaults to `4`.
+    write_color : array_like of int, optional
+        The RGB color that should be used to draw the centers, defaults to
+        [255, 0, 0], which is red. `write_color` have a length of 3; each
+        integer represents red, green, and blue, respectively.
 
     Returns
     -------
@@ -289,18 +287,28 @@ def centers_to_image(centers, shape=(1000, 1000, 3), radius=4):
         An N-dimensional NumPy array representing the RGB output image with the
         shape defined as `shape`.
     """
-    rendered_annotations = np.zeros(shape, dtype=np.uint8)
-    if rendered_annotations.ndim == 3:
-        if rendered_annotations.shape[2] == 3:
-            write_color = [255, 0, 0]
-        else:
-            raise ValueError(
-                "If shape has length 3, the 3rd value must be 3 for RGB.")
-    elif rendered_annotations.ndim == 2:
-        write_color = 255
-    else:
-        raise ValueError("shape must have length 2 or 3.")
-
+    x_max = np.amax([x for x, _ in centers])
+    y_max = np.amax([y for _, y in centers])
+    rendered_annotations = np.zeros((y_max, x_max, 3), dtype=np.uint8)
     for center in centers:
         cv2.circle(rendered_annotations, center, radius, write_color, -1)
     return rendered_annotations
+
+
+def split_dask_array_by_colors(arr):
+    # TODO: this is currently used in viewmask. remove this?
+    import dask.array as da
+    # this is equivalent to cv2.split, but cv2.split is slow.
+    # https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html#:~:text=cv2.split()%20is%20a%20costly%20operation%20(in%20terms%20of%20time),%20so%20only%20use%20it%20if%20necessary.%20Numpy%20indexing%20is%20much%20more%20efficient%20and%20should%20be%20used%20if%20possible.
+    # https://answers.opencv.org/question/3754/how-to-split-cv2imread-to-3-separate-mats/?answer=3757#post-id-3757
+    channel_r, channel_g, channel_b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+    red_img = da.moveaxis(da.stack([
+        channel_r, da.zeros_like(channel_r), da.zeros_like(channel_r)
+    ]), 0, -1)
+    green_img = da.moveaxis(da.stack([
+        da.zeros_like(channel_g), channel_g, da.zeros_like(channel_g)
+    ]), 0, -1)
+    blue_img = da.moveaxis(da.stack([
+        da.zeros_like(channel_b), da.zeros_like(channel_b), channel_b
+    ]), 0, -1)
+    return red_img, green_img, blue_img
