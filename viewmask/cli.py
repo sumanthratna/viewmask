@@ -41,19 +41,21 @@ def cli():
     help=INTERACTIVE_OPTION_HELP
 )
 def view_annotations(annotations, interactive):
-    annotations_are_npy = splitext(annotations)[1] == '.npy'
-    if annotations_are_npy and interactive is True:
+    annotations_ext = splitext(annotations)[1]
+    annotations_are_not_xml = annotations_ext != '.xml'
+    if annotations_are_not_xml and interactive is True:
         raise ValueError(
-            "The interactive flag cannot be passed with a numpy mask.")
+            "The interactive flag is only supported with XML annotations.")
 
-    try:
-        tree = ET.parse(annotations)
-    except ET.ParseError:
-        # TODO: don't just do nothing, some XMLs might actually be unparseable:
-        pass
     with napari.gui_qt():
         viewer = napari.Viewer()
         if interactive:
+            try:
+                tree = ET.parse(annotations)
+            except ET.ParseError:
+                # TODO: don't just do nothing, some XMLs might actually be
+                # unparseable
+                pass
             regions = xml_to_contours(tree, transpose=True)
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
@@ -66,22 +68,22 @@ def view_annotations(annotations, interactive):
                 name='centers'
             )
         else:
-            if annotations_are_npy:
+            if annotations_ext == '.npy':
                 rendered_annotations = np.load(annotations)
-                viewer.add_image(
-                    rendered_annotations,
-                    name='annotations',
-                    blending='additive',
-                    multiscale=False,
-                )
-            else:
+            elif annotations_ext == '.png':
+                from dask.array import squeeze
+                rendered_annotations = squeeze(file_to_dask_array(annotations))
+            elif annotations_ext == '.xml':
                 rendered_annotations = xml_to_image(tree)
-                viewer.add_image(
-                    rendered_annotations,
-                    name='annotations',
-                    blending='additive',
-                    multiscale=False,
-                )
+            else:
+                # TODO: raise ValueError
+                pass
+            viewer.add_image(
+                rendered_annotations,
+                name='annotations',
+                blending='additive',
+                multiscale=False,
+            )
             centers = centers_of_contours(
                 mask_to_contours(rendered_annotations))
             viewer.add_image(
@@ -114,10 +116,11 @@ def view_image(image):
     help=INTERACTIVE_OPTION_HELP
 )
 def view_overlay(image, annotations, interactive):
-    annotations_are_npy = splitext(annotations)[1] == '.npy'
-    if annotations_are_npy and interactive is True:
+    annotations_ext = splitext(annotations)[1]
+    annotations_are_not_xml = annotations_ext != '.xml'
+    if annotations_are_not_xml and interactive is True:
         raise ValueError(
-            "The interactive flag cannot be passed with a numpy mask.")
+            "The interactive flag is only supported with XML annotations.")
 
     da_img = file_to_dask_array(image)
 
@@ -132,7 +135,12 @@ def view_overlay(image, annotations, interactive):
         )
 
         if interactive:
-            tree = ET.parse(annotations)
+            try:
+                tree = ET.parse(annotations)
+            except ET.ParseError:
+                # TODO: don't just do nothing, some XMLs might actually be
+                # unparseable
+                pass
             regions = xml_to_contours(tree, transpose=True)
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
@@ -145,23 +153,23 @@ def view_overlay(image, annotations, interactive):
                 name='centers'
             )
         else:
-            if annotations_are_npy:
+            if annotations_ext == '.npy':
                 rendered_annotations = np.load(annotations)
-                viewer.add_image(
-                    rendered_annotations,
-                    name='annotations',
-                    blending='additive',
-                    multiscale=False,
-                )
-            else:
-                tree = ET.parse(annotations)
+            elif annotations_ext == '.png':
+                from dask.array import squeeze
+                rendered_annotations = squeeze(file_to_dask_array(annotations))
+            elif annotations_ext == '.xml':
                 rendered_annotations = xml_to_image(tree)
-                viewer.add_image(
-                    rendered_annotations,
-                    name='annotations',
-                    blending='additive',
-                    multiscale=False,
-                )
+            else:
+                # TODO: raise ValueError
+                pass
+            viewer.add_image(
+                rendered_annotations,
+                name='annotations',
+                blending='additive',
+                multiscale=False,
+            )
+            print(rendered_annotations)
             centers = centers_of_contours(
                 mask_to_contours(rendered_annotations))
             viewer.add_image(

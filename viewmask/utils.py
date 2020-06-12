@@ -33,8 +33,8 @@ def file_to_dask_array(
     Examples
     --------
     >>> da_img = file_to_dask_array(path)
-    >>> npa_img = arr.compute()  # convert from dask array to numpy array
-    >>> pil_img = to_pil(cv2.resize(
+    >>> npa_img = arr.compute()  # convert the dask array to a numpy array
+    >>> pil_img = Image.fromarray(cv2.resize(
     ...     npa_img,
     ...     dsize=(1440, 700),
     ...     interpolation=cv2.INTER_CUBIC
@@ -243,6 +243,9 @@ def mask_to_contours(mask):
         A list of contours, where each contour is a list of coordinates, where
         each coordinate is a list of a list of X and Y integers.
     """
+    import dask.array as da
+    if isinstance(mask, da.Array):
+        mask = mask.compute()  # convert to numpy array
     if mask.ndim == 3:
         if mask.shape[2] == 3:
             graymask = cv2.cvtColor(mask, cv2.COLOR_RGB2GRAY)
