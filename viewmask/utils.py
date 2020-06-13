@@ -296,7 +296,7 @@ def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
 
 
 def split_dask_array_by_colors(arr):
-    # TODO: this is currently used in viewmask. remove this?
+    # TODO: this is not currently used in viewmask. remove this?
     import dask.array as da
     # this is equivalent to cv2.split, but cv2.split is slow.
     # https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html#:~:text=cv2.split()%20is%20a%20costly%20operation%20(in%20terms%20of%20time),%20so%20only%20use%20it%20if%20necessary.%20Numpy%20indexing%20is%20much%20more%20efficient%20and%20should%20be%20used%20if%20possible.
