@@ -30,28 +30,6 @@ A Python package and CLI to view XML annotations and NumPy masks.
 Installation
 ============
 
-pip
-------------
-::
+If you only want to view TCGA annotations, run :code:`python3 -m pip install viewmask`. If you get an error due to napari's installation, try running :code:`python3 -m pip install --upgrade pip`.
 
- python3 -m pip install --upgrade pip
- python3 -m pip install viewmask
-
-or:
-::
-
- python3 -m pip install --upgrade pip
- python3 -m pip install git+git://github.com/sumanthratna/viewmask.git#egg=viewmask
-
-Poetry
-------------
-::
-
- poetry run python -m pip install --upgrade pip
- poetry add viewmask
-
-or:
-::
-
- poetry run python -m pip install --upgrade pip
- poetry add git+https://github.com/sumanthratna/viewmask.git
+If you want to install the viewmask collaborate web app, run :code:`python3 -m pip install "viewmask[collaborate]"`
