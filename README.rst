@@ -30,7 +30,7 @@ A Python package and CLI to view XML annotations and NumPy masks.
 Features
 ========
 * edit and view annotations quickly with napari
-* launch a highly scalable web app for collaborative annnotation editing
+* launch a highly scalable and secure web app for collaborative annnotation editing
 
 Installation
 ============
