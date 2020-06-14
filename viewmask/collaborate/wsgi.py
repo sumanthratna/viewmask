@@ -1,5 +1,5 @@
 """
-WSGI config for collaborate project.
+WSGI config for viewmask_collaborate project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
