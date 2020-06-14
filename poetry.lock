@@ -600,14 +600,6 @@ version = "7.1.2"
 
 [[package]]
 category = "main"
-description = "Python Imaging Library (Fork)"
-name = "pillow-simd"
-optional = false
-python-versions = ">=3.5"
-version = "7.0.0.post3"
-
-[[package]]
-category = "main"
 description = "Python Image Sequence"
 name = "pims"
 optional = false
@@ -1135,7 +1127,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "b985a4f3dff61a6d0f16f62f943b0e8ac2599bd119cd4c3d7635c566bd976bea"
+content-hash = "d80937f260de89cc4c8483b032c66106eee5300fa6c1042ba9929ff76e83faca"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1453,9 +1445,6 @@ pillow = [
     {file = "Pillow-7.1.2-pp373-pypy36_pp73-win32.whl", hash = "sha256:0f01e63c34f0e1e2580cc0b24e86a5ccbbfa8830909a52ee17624c4193224cd9"},
     {file = "Pillow-7.1.2-py3.8-macosx-10.9-x86_64.egg", hash = "sha256:70e3e0d99a0dcda66283a185f80697a9b08806963c6149c8e6c5f452b2aa59c0"},
     {file = "Pillow-7.1.2.tar.gz", hash = "sha256:a0b49960110bc6ff5fead46013bcb8825d101026d466f3a4de3476defe0fb0dd"},
-]
-pillow-simd = [
-    {file = "Pillow-SIMD-7.0.0.post3.tar.gz", hash = "sha256:c27907af0e7ede1ceed281719e722e7dbf3e1dbfe561373978654a6b64896cb7"},
 ]
 pims = [
     {file = "PIMS-0.4.1-py3-none-any.whl", hash = "sha256:e79f3c0c6acaff6d48041723cb11f057c18c7ffb00f8a0095e365db4e60d4350"},
