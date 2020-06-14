@@ -2,14 +2,8 @@
 {% block title %}Submit data{% endblock %}
 {% block content %}
 <h1>{{ message }}</h1>
-<form method="post">
-{% if form.errors %}
-<p class='warning'>Please correct the errors below:</p>
-{% endif %}
-<ul class='form'>
-{{ form }}
-<li><input type='submit' value='Submit'></li>
-</ul>
-</form>
-
+<!-- <h1>{{ message }}</h1> -->
+<div class="flex items-center justify-center align-middle h-screen w-full max-w-xs">
+  {% block form %}{% endblock %}
+</div>
 {% endblock %}

@@ -44,6 +44,7 @@ setup(
         'toolz==0.*,>=0.10.0'
     ],
     extras_require={"collaborate": [
-        "django >= 3.0.7"
+        "django >= 3.0.7",
+        "django-tailwind >= 0.9.0",
     ]},
 )

@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}templates/base.html{% endblock %}</title>
-</head>
-<body>
-<div id="sidebar">
-    {% block sidebar %}
-    <ul>
-        <li><a href="/">Home</a></li>
 
-        {% if user.is_authenticated %}
-            <li><a href="/accounts/logout">Logout</a></li>
-        {% else %}
-            <li><a href="/accounts/login">Login</a></li>
-        {% endif %}
-    </ul>
-    {% endblock %}
-</div>
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css" />
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <title>{% block title %}templates/base.html{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div class="flex flex-row">
+    <div id="sidebar" class="h-screen sticky top-0 p-4">
+      {% block sidebar %}
+      <div class="bg-main flex-grow w-full h-full pt-20 z-40 lg:flex overflow-y-auto">
+        <div class="shadow-lg w-full px-8 py-2 lg:py-8">
+          <div class="flex-col px-12 py-6 rounded-lg shadow-lg bg-accent bg-gray-700">
+            <ul>
+              <li class="mb-2">
+                <a href="/">
+                  <div class="rounded px-3 py-2 font-semibold text-accent-dark text-lg text-white transition-colors duration-500 ease-in-out hover:bg-gray-900">Home</div>
+                </a>
+              </li>
+              <li class="mb-2">
+                <a href="/accounts/login">
+                  <div class="rounded px-3 py-2 font-semibold text-accent-dark text-lg text-white transition-colors duration-500 ease-in-out hover:bg-gray-900">Login</div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+    </div>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
 </body>
+
 </html>
