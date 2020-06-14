@@ -27,9 +27,14 @@ from collaborate import views
 # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
 # accounts/reset/done/ [name='password_reset_complete']
 
+# the auth templates are from here:
+# https://github.com/django/django/tree/master/tests/auth_tests/templates/registration
+# the following are included but aren't necessary:
+# html_password_reset_email, password_reset_email, and password_reset_subject
+
 urlpatterns = [
     path('', views.index),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('annotate', views.annotate),
+    path('annotate/', views.annotate),
     path('admin/', admin.site.urls),
 ]
