@@ -30,6 +30,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     ],
     "fallbackPool": [
       [
+        "@fullhuman/postcss-purgecss",
+        "npm:2.3.0"
+      ],
+      [
         "autoprefixer",
         "npm:9.8.0"
       ],
@@ -69,6 +73,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@fullhuman/postcss-purgecss", "npm:2.3.0"],
             ["autoprefixer", "npm:9.8.0"],
             ["clean-css-cli", "npm:4.3.0"],
             ["node-sass", "npm:4.14.1"],
@@ -907,6 +912,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["django_tailwind", "workspace:."],
+            ["@fullhuman/postcss-purgecss", "npm:2.3.0"],
             ["autoprefixer", "npm:9.8.0"],
             ["clean-css-cli", "npm:4.3.0"],
             ["node-sass", "npm:4.14.1"],

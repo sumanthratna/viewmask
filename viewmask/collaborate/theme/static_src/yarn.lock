@@ -5,7 +5,7 @@ __metadata:
   version: 4
   cacheKey: 4
 
-"@fullhuman/postcss-purgecss@npm:^2.1.2":
+"@fullhuman/postcss-purgecss@npm:^2.1.2, @fullhuman/postcss-purgecss@npm:^2.3.0":
   version: 2.3.0
   resolution: "@fullhuman/postcss-purgecss@npm:2.3.0"
   dependencies:
@@ -740,6 +740,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "django_tailwind@workspace:."
   dependencies:
+    "@fullhuman/postcss-purgecss": ^2.3.0
     autoprefixer: ^9.8.0
     clean-css-cli: ^4.3.0
     node-sass: ^4.14.1
