@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block form %}
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
 <form class="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post" action="{% url 'login' %}">
   {% csrf_token %}
   <div class="mb-4">
@@ -15,7 +12,7 @@
       {{ form.username.label_tag }}
     </label>
     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" type="text"
-      placeholder="Username" value="{{ form.username.value|default_if_none:"" }}">
+      placeholder="Username" value="{{ form.username.value|default_if_none:"" }}" autocomplete="username">
   </div>
   <div class="mb-6">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.password.id_for_label }}">
@@ -23,12 +20,14 @@
     </label>
     <span class="space-y-1">
       <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" type="password"
-        placeholder="Password" value="{{ form.password.value|default_if_none:"" }}">
-      <p class="text-red-500 text-xs italic">Please choose a password.</p>
+        placeholder="Password" value="{{ form.password.value|default_if_none:"" }}" autocomplete="current-password">
+      {% if form.errors %}
+      <p class="text-red-500 text-xs italic">Your username and password didn't match. Please try again.</p>
+      {% endif %}
     </span>
   </div>
   <div class="flex items-center justify-between space-x-6">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
       Sign In
     </button>
     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{% url 'password_reset' %}">
