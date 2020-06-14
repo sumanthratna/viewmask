@@ -11,4 +11,5 @@ script:
   - pip install .
   - pip uninstall viewmask
   - pip install ".[collaborate]"
+  - cd viewmask/collaborate && python manage.py test
   # - pytest tests/
