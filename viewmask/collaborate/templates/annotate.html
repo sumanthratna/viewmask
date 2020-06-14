@@ -17,6 +17,7 @@
     <button onclick="downloadROIs()">Download Annotations</button>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.2/openseadragon.min.js"></script>
 <script>
   const height = 9221;
   const width = 7026;
@@ -26,7 +27,7 @@
 
   osd = OpenSeadragon({
     id: 'osd',
-    prefixUrl: './openseadragon/images/',
+    prefixUrl: 'https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.2/images/',
     tileSources: {
       Image: {
         xmlns: "http://schemas.microsoft.com/deepzoom/2008",
