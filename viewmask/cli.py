@@ -6,9 +6,7 @@ import xml.etree.ElementTree as ET
 import numpy as np
 from viewmask.utils import (
     file_to_dask_array,
-    xml_to_contours,
     centers_of_contours,
-    xml_to_image,
     get_stroke_color,
     mask_to_contours,
     centers_to_image
@@ -56,7 +54,9 @@ def view_annotations(annotations, interactive):
                 # TODO: don't just do nothing, some XMLs might actually be
                 # unparseable
                 pass
-            regions = xml_to_contours(tree, transpose=True)
+            from viewmask import Annotations
+            annotations = Annotations.from_tcga(tree)
+            regions = annotations.export('napari')
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
                 regions,
@@ -80,7 +80,8 @@ def view_annotations(annotations, interactive):
                     # TODO: don't just do nothing, some XMLs might actually be
                     # unparseable
                     pass
-                rendered_annotations = xml_to_image(tree)
+                annotations = Annotations.from_tcga(tree)
+                rendered_annotations = annotations.as_image()
             else:
                 # TODO: raise ValueError
                 pass
@@ -159,7 +160,9 @@ def view_overlay(image, annotations, interactive):
                 # TODO: don't just do nothing, some XMLs might actually be
                 # unparseable
                 pass
-            regions = xml_to_contours(tree, transpose=True)
+            from viewmask import Annotations
+            annotations = Annotations.from_tcga(tree)
+            regions = annotations.export('napari')
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
                 regions,
@@ -183,7 +186,9 @@ def view_overlay(image, annotations, interactive):
                     # TODO: don't just do nothing, some XMLs might actually be
                     # unparseable
                     pass
-                rendered_annotations = xml_to_image(tree)
+                from viewmask import Annotations
+                annotations = Annotations.from_tcga(tree)
+                rendered_annotations = annotations.as_image()
             else:
                 # TODO: raise ValueError
                 pass

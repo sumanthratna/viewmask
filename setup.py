@@ -39,7 +39,7 @@ setup(
         'numpy==1.*,>=1.18.4',
         'opencv-python-headless==4.*,>=4.2.0',
         'openslide-python==1.*,>=1.1.1',
-        'pillow-simd==7.*,>=7.0.0',
+        'pillow>=7.1.2',
         'scikit-image==0.*,>=0.17.2',
         'toolz==0.*,>=0.10.0'
     ],
