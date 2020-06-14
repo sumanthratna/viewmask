@@ -4,6 +4,10 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
   content: [
     '../../templates/**/*.html',
   ],
+  css: [
+    '../../staticfiles/css/*.css',
+    '../static/css/styles.css'
+  ],
 
   // This is the function used to extract class names from your templates
   defaultExtractor: content => {

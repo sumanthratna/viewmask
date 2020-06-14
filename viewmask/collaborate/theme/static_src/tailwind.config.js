@@ -1,7 +1,13 @@
 module.exports = {
-  purge: [
-    '../../templates/**/*.html',
-  ],
+  purge: {
+    content: [
+      '../../templates/**/*.html',
+    ],
+    css: [
+      '../../staticfiles/css/*.css',
+      '../static/css/styles.css'
+    ],
+  },
   target: 'relaxed',
   prefix: '',
   important: false,

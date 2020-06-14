@@ -1,0 +1,14 @@
+#!/bin/bash
+
+activate () {
+  . ../../../../venv/bin/activate
+}
+if [[ "$VIRTUAL_ENV" != "" ]]
+then
+  python ../../manage.py collectstatic
+else
+  activate
+  python ../../manage.py collectstatic
+  deactivate
+fi
+yarn dlx purgecss --css ../static/css/styles.css ../../staticfiles/css/*.css --content ../../templates/**/*.html --config postcss.config.js --output ../../staticfiles/css
