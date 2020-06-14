@@ -9,4 +9,6 @@ jobs:
   - python: nightly
 script:
   - pip install .
+  - pip uninstall viewmask
+  - pip install ".[collaborate]"
   # - pytest tests/
