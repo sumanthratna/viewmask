@@ -206,8 +206,7 @@ def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
     Returns
     -------
     rendered_annotations : numpy.ndarray
-        An N-dimensional NumPy array representing the RGB output image with the
-        shape defined as `shape`.
+        A 3-dimensional NumPy array representing the RGB output image.
     """
     x_max = np.amax([x for x, _ in centers])
     y_max = np.amax([y for _, y in centers])

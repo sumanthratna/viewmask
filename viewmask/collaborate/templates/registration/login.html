@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block form %}
-<form class="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post" action="{% url 'login' %}">
+<form class="w-screen bg-gray-100 shadow-md rounded px-8 pt-6 pb-8" method="post" action="{% url 'login' %}">
   {% csrf_token %}
   <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.username.id_for_label }}">

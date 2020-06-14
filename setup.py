@@ -28,7 +28,9 @@ setup(
     author='Sumanth Ratna',
     author_email='sumanthratna@gmail.com',
     license='MIT',
-    entry_points={"console_scripts": ["viewmask = viewmask.cli:cli"]},
+    entry_points={"console_scripts": [
+        "viewmask = viewmask.cli:cli",
+    ]},
     packages=['viewmask', 'viewmask.collaborate'],
     package_dir={"": "."},
     package_data={},

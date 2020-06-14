@@ -91,6 +91,9 @@ class Annotations(UserList):
             return [flip(coordinate_pair) for coordinate_pair in self.data]
         elif mode == 'opencv':
             return self.data
+        else:
+            # TODO: is ValueError the right error?
+            raise ValueError("mode must be 'napari' or 'opencv'")
 
     def as_image(self):
         """Convert an annotations object to an annotation mask.
