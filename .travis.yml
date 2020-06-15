@@ -7,9 +7,10 @@ python:
 jobs:
   allow_failures:
   - python: nightly
+install:
+  - pip install --upgrade pip
+  - pip install poetry
 script:
-  - pip install .
-  - pip uninstall viewmask -y
-  - pip install ".[collaborate]"
-  - cd viewmask/collaborate && python manage.py test
-  # - pytest tests/
+  - poetry install
+  - poetry build
+  - pytest tests/

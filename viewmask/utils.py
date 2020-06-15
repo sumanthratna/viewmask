@@ -94,6 +94,52 @@ def file_to_dask_array(
             return dask_image.imread.imread(path)
 
 
+def xml_to_contours(xml_tree, transpose=False):
+    """Extract contours from a TCGA XML annotations file.
+
+    Parameters
+    ----------
+    xml_tree : xml.etree.ElementTree
+        The XML tree of the TCGA annotations file.
+    transpose : bool, optional
+        Whether to transpose the image over its main diagonal. This is done by
+        reverting the x and y coordinates. Set this to True if you will pass
+        these contours to a napari layer.
+
+    Returns
+    -------
+    contours : list of numpy.ndarray
+        A list of contours, where each contour is a list of coordinates,
+        where each coordinate is a list with exactly 2 integers, representing
+        the X and Y coordinates, respectively.
+
+    Notes
+    -----
+    The main diagonal is defined as the line that connects the top-left corner
+    and the bottom right corner.
+    """
+    root = xml_tree.getroot()
+    contours = []
+    for region in root.iter("Vertices"):
+        coords = []
+        for vertex in region:
+            if transpose:
+                # convert each coordinate to (y, x) to transpose
+                coords.append([
+                    float(vertex.get("Y")),
+                    float(vertex.get("X"))
+                ])
+            else:
+                coords.append([
+                    float(vertex.get("X")),
+                    float(vertex.get("Y"))
+                ])
+        # np.int32 is necessary for cv2.drawContours
+        contour = np.array(coords, dtype=np.int32)
+        contours.append(contour)
+    return contours
+
+
 def centers_of_contours(contours):
     """Return the centers of a list of OpenCV contours.
 
@@ -126,6 +172,38 @@ def centers_of_contours(contours):
             (center_x, center_y), _ = cv2.minEnclosingCircle(contour)
         centers.append((int(center_x), int(center_y)))
     return centers
+
+
+# TODO: remove default for shape,
+# instead guess image based on min/max coordinates
+def xml_to_image(xml_tree, shape=(1000, 1000, 3)):
+    """Convert a TCGA annotations file to a binary mask.
+
+    Parameters
+    ----------
+    xml_tree : xml.etree.ElementTree
+        The XML tree of the TCGA annotations file.
+    shape : tuple of int, optional
+        The shape of the mask. `shape` defaults to `(1000, 1000, 3)`, since
+        most images in the TCGA dataset have a height and width of 1000 pixels
+        and have 3 channels (red, green, and blue).
+
+    Returns
+    -------
+    rendered_annotations : numpy.ndarray
+        An N-dimensional NumPy array representing the RGB output image with the
+        shape defined as `shape`.
+    """
+    contours = xml_to_contours(xml_tree, transpose=False)
+    rendered_annotations = np.zeros(shape, dtype=np.uint8)
+    cv2.drawContours(rendered_annotations, contours, -1, [0, 255, 0])
+    for contour in contours:
+        cv2.fillPoly(
+            rendered_annotations,
+            np.array([contour], dtype=np.int32),
+            [230, 230, 230]
+        )
+    return rendered_annotations
 
 
 def get_stroke_color(xml_tree):
@@ -206,19 +284,19 @@ def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
     Returns
     -------
     rendered_annotations : numpy.ndarray
-        A 3-dimensional NumPy array representing the RGB output image.
+        An N-dimensional NumPy array representing the RGB output image with the
+        shape defined as `shape`.
     """
     x_max = np.amax([x for x, _ in centers])
     y_max = np.amax([y for _, y in centers])
-    shape = (y_max, x_max, 3)
-    rendered_annotations = np.zeros(shape, dtype=np.uint8)
+    rendered_annotations = np.zeros((y_max, x_max, 3), dtype=np.uint8)
     for center in centers:
         cv2.circle(rendered_annotations, center, radius, write_color, -1)
     return rendered_annotations
 
 
 def split_dask_array_by_colors(arr):
-    # TODO: this is not currently used in viewmask. remove this?
+    # TODO: this is currently used in viewmask. remove this?
     import dask.array as da
     # this is equivalent to cv2.split, but cv2.split is slow.
     # https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html#:~:text=cv2.split()%20is%20a%20costly%20operation%20(in%20terms%20of%20time),%20so%20only%20use%20it%20if%20necessary.%20Numpy%20indexing%20is%20much%20more%20efficient%20and%20should%20be%20used%20if%20possible.
