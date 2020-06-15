@@ -49,5 +49,6 @@ setup(
         "django>=3.0.7",
         "django-tailwind>=0.9.0",
         "whitenoise[brotli]>=5.1.0",
+        "uwsgi>=2.0.19",
     ]},
 )
