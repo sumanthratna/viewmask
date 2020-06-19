@@ -402,7 +402,7 @@ description = "n-dimensional array viewer in Python"
 name = "napari"
 optional = false
 python-versions = ">=3.6"
-version = "0.3.4"
+version = "0.3.5"
 
 [package.dependencies]
 IPython = ">=7.7.0"
@@ -1325,8 +1325,8 @@ more-itertools = [
     {file = "more_itertools-8.3.0-py3-none-any.whl", hash = "sha256:7818f596b1e87be009031c7653d01acc46ed422e6656b394b0f765ce66ed4982"},
 ]
 napari = [
-    {file = "napari-0.3.4-py3-none-any.whl", hash = "sha256:2b01ece91ff4f14af12efe164035f1f684f30394a88a7ec490c9c1e76648da16"},
-    {file = "napari-0.3.4.tar.gz", hash = "sha256:23c0a0dde1337726e1913b674fc181c5f00381276fc706137879d7ad1bd86d89"},
+    {file = "napari-0.3.5-py3-none-any.whl", hash = "sha256:2700cfafd45229034edbfba124319a671df4ac38d672427ee648fe5a5b5e61a6"},
+    {file = "napari-0.3.5.tar.gz", hash = "sha256:210873884c0bb901ed7f9696b2a202a5967dff83612e2c9fd89ddd0c3ed6d9ff"},
 ]
 napari-plugin-engine = [
     {file = "napari-plugin-engine-0.1.6.tar.gz", hash = "sha256:5a447d16c9e011ace2d8a4e0384b79c2cc4759cb2a94cc309f8000785d7fdba9"},
@@ -1601,6 +1601,7 @@ qtpy = [
     {file = "QtPy-1.9.0.tar.gz", hash = "sha256:2db72c44b55d0fe1407be8fba35c838ad0d6d3bb81f23007886dc1fc0f459c8d"},
 ]
 requests = [
+    {file = "requests-2.23.0-py2.7.egg", hash = "sha256:5d2d0ffbb515f39417009a46c14256291061ac01ba8f875b90cad137de83beb4"},
     {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
     {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
 ]
