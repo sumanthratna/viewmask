@@ -26,6 +26,8 @@ A Python package and CLI to view XML annotations and NumPy masks.
 
 .. |PyPI license| image:: https://img.shields.io/pypi/l/viewmask.svg
    :target: https://pypi.python.org/pypi/viewmask/
+   
+viewmask is meant to be a quick-and-easy tool for visualizing masks and a quick-and-easy library for working with annotations. For a more powerful library, consider `HistomicsTK <https://github.com/DigitalSlideArchive/HistomicsTK>`_. (see `annotations and masks <https://digitalslidearchive.github.io/HistomicsTK/histomicstk.annotations_and_masks.html>`_).
 
 Installation
 ============
