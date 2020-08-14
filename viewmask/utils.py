@@ -186,7 +186,7 @@ def mask_to_contours(mask):
     return contours
 
 
-def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
+def centers_to_image(centers, radius=4, write_color=[255, 0, 0], shape=None):
     """Draw coordinates of centers to a static image.
 
     Parameters
@@ -202,6 +202,10 @@ def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
         The RGB color that should be used to draw the centers, defaults to
         [255, 0, 0], which is red. `write_color` have a length of 3; each
         integer represents red, green, and blue, respectively.
+    shape : tuple of int, optional
+        The shape of the output image. Defaults to (x_max, y_max, 3), where
+        x_max are the maximum x-coordinate and y-coordinate, respectively, of
+        the centers.
 
     Returns
     -------
@@ -209,9 +213,10 @@ def centers_to_image(centers, radius=4, write_color=[255, 0, 0]):
         An N-dimensional NumPy array representing the RGB output image with the
         shape defined as `shape`.
     """
-    x_max = np.amax([x for x, _ in centers])
-    y_max = np.amax([y for _, y in centers])
-    shape = (y_max, x_max, 3)
+    if shape is None:
+        x_max = np.amax([x for x, _ in centers])
+        y_max = np.amax([y for _, y in centers])
+        shape = (y_max, x_max, 3)
     rendered_annotations = np.zeros(shape, dtype=np.uint8)
     for center in centers:
         cv2.circle(rendered_annotations, center, radius, write_color, -1)
