@@ -106,7 +106,7 @@ def view_annotations(annotations, interactive):
                 mask = rendered_annotations
             centers = centers_of_contours(mask_to_contours(mask))
             viewer.add_image(
-                centers_to_image(centers),
+                centers_to_image(centers, shape=rendered_annotations.shape),
                 name='centers',
                 rgb=True,
                 blending='additive',
@@ -213,7 +213,7 @@ def view_overlay(image, annotations, interactive):
                 mask = rendered_annotations
             centers = centers_of_contours(mask_to_contours(mask))
             viewer.add_image(
-                centers_to_image(centers),
+                centers_to_image(centers, shape=rendered_annotations.shape),
                 name='centers',
                 rgb=True,
                 blending='additive',
