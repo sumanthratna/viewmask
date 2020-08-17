@@ -240,3 +240,52 @@ def split_dask_array_by_colors(arr):
         da.zeros_like(channel_b), da.zeros_like(channel_b), channel_b
     ]), 0, -1)
     return red_img, green_img, blue_img
+
+
+def get_hematoxylin(rgb):
+    """Extract the hematoxylin layer from an RGB image.
+
+    Parameters
+    ----------
+    rgb : (..., 3) array_like
+        The RGB input image to process.
+
+    Returns
+    -------
+    arr_hema : ndarray
+        A 2-dimensional array representing the hematoxylin
+        intensity.
+        
+    Raises
+    ------
+    ValueError
+        If `rgb` is not at least 2-D with shape (..., 3).
+        
+    References
+    ----------
+    .. [1] A. C. Ruifrok and D. A. Johnston, "Quantification of histochemical
+           staining by color deconvolution.," Analytical and quantitative
+           cytology and histology / the International Academy of Cytology [and]
+           American Society of Cytology, vol. 23, no. 4, pp. 291-9, Aug. 2001.
+           
+    Examples
+    --------
+    >>> from skimage import data
+    >>> from viewmask.utils import get_hematoxylin
+    >>> rgb = data.immunohistochemistry()
+    >>> he_layer = get_hematoxylin(rgb)
+    """
+    from skimage.color import rgb2hed
+    
+    # matplotlib navy is (22, 0, 134), vispy navy is (0, 0, 128)
+    # cmap_hema = Colormap(['white', 'navy'])
+
+    # matplotlib saddlebrown is (144, 66, 0), vispy saddlebrown is (139, 69, 19)
+    # cmap_dab = Colormap(['white', 'saddlebrown'])
+
+    # matplotlib darkviolet is (166, 0, 218), vispy darkviolet is (148, 0, 211)
+    # cmap_eosin = Colormap(['darkviolet', 'white'])
+
+    ihc_hed = rgb2hed(rgb)
+    arr_hema = ihc_hed[:, :, 0]
+    return arr_hema
