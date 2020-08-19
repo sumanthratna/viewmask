@@ -7,6 +7,9 @@ python:
 jobs:
   allow_failures:
   - python: nightly
+before_install:
+  - docker build -t sumanthratna/viewmask .
+  - docker run sumanthratna/viewmask /bin/sh -c "poetry run pytest tests/"
 install:
   - python3 -m pip install --upgrade pip
   - python3 -m pip install poetry
@@ -14,4 +17,4 @@ script:
   - poetry run python3 -m pip install "setuptools<45.3.0"
   - poetry install
   - poetry build
-  - pytest tests/
+  - poetry run pytest tests/
