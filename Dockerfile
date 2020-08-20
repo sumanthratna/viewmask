@@ -18,7 +18,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends build-essent
     && python3 -m pip install poetry \
     && poetry run python3 -m pip install "numpy==1.19.1" "setuptools<45.3.0" \
     && poetry update && poetry install \
-    && find / -name tiff.h -exec cp -n "{}" /root/.cache/pypoetry/virtualenvs/viewmask-BwL-jJjF-py3.8/include/  \;
+    && find / -name tiff.h -exec cp -n "{}" "$(poetry env info --path)/include/"  \;
 
 # Ports code into /viewmask
 COPY . /viewmask
