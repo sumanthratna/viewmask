@@ -8,6 +8,14 @@ version = "0.7.12"
 
 [[package]]
 category = "main"
+description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+name = "appdirs"
+optional = false
+python-versions = "*"
+version = "1.4.4"
+
+[[package]]
+category = "main"
 description = "Disable App Nap on OS X 10.9"
 marker = "sys_platform == \"darwin\" or platform_system == \"Darwin\""
 name = "appnope"
@@ -411,13 +419,14 @@ description = "n-dimensional array viewer in Python"
 name = "napari"
 optional = false
 python-versions = ">=3.6"
-version = "0.3.6"
+version = "0.3.7"
 
 [package.dependencies]
 IPython = ">=7.7.0"
 Pillow = "<7.1.0 || >7.1.0,<7.1.1 || >7.1.1"
 PyOpenGL = ">=3.1.0"
 PyYAML = ">=5.1"
+appdirs = ">=1.4.4"
 cachey = ">=0.2.1"
 imageio = ">=2.5.0"
 ipykernel = ">=5.1.1"
@@ -431,6 +440,7 @@ qtpy = ">=1.7.0"
 scipy = ">=1.2.0"
 tifffile = ">=2020.2.16"
 toolz = ">=0.10.0"
+typing-extensions = "*"
 vispy = ">=0.6.4"
 wrapt = ">=1.11.1"
 
@@ -1080,6 +1090,14 @@ test = ["pytest", "mock"]
 
 [[package]]
 category = "main"
+description = "Backported and Experimental Type Hints for Python 3.5+"
+name = "typing-extensions"
+optional = false
+python-versions = "*"
+version = "3.7.4.3"
+
+[[package]]
+category = "main"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
 optional = false
@@ -1146,12 +1164,17 @@ testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
 content-hash = "78051047eee7f2e8f71e50133d0fa79c56e908e7012675af2b312d2fc2bc540d"
+lock-version = "1.0"
 python-versions = ">=3.6,<3.9"
 
 [metadata.files]
 alabaster = [
     {file = "alabaster-0.7.12-py2.py3-none-any.whl", hash = "sha256:446438bdcca0e05bd45ea2de1668c1d9b032e1a9154c2c259092d77031ddd359"},
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
+]
+appdirs = [
+    {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
+    {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
 ]
 appnope = [
     {file = "appnope-0.1.0-py2.py3-none-any.whl", hash = "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0"},
@@ -1354,8 +1377,8 @@ more-itertools = [
     {file = "more_itertools-8.4.0-py3-none-any.whl", hash = "sha256:b78134b2063dd214000685165d81c154522c3ee0a1c0d4d113c80361c234c5a2"},
 ]
 napari = [
-    {file = "napari-0.3.6-py3-none-any.whl", hash = "sha256:db183b8ee01642118185c1ee21fea0eef8ad153363fec98ae94fa0e206e9d2a1"},
-    {file = "napari-0.3.6.tar.gz", hash = "sha256:95fd38a423b9e6c926aa5db7a0b7b50ebe8b59976a380855ed2ef4fce6f1fd56"},
+    {file = "napari-0.3.7-py3-none-any.whl", hash = "sha256:6e006f80b29eb2a87902bd4b9f4e0d83527fafb0cd5390a550d571aea3a487f1"},
+    {file = "napari-0.3.7.tar.gz", hash = "sha256:77acd0bea1e0fbfde5896c94108d03bfc932cb8de527f4b7ea14699434f83611"},
 ]
 napari-plugin-engine = [
     {file = "napari-plugin-engine-0.1.7.tar.gz", hash = "sha256:48239476b13a21a31bb08e4fe21cb192afba717464bdce9e21ac2fbafed20e96"},
@@ -1753,6 +1776,11 @@ tornado = [
 traitlets = [
     {file = "traitlets-4.3.3-py2.py3-none-any.whl", hash = "sha256:70b4c6a1d9019d7b4f6846832288f86998aa3b9207c6821f3578a6a6a467fe44"},
     {file = "traitlets-4.3.3.tar.gz", hash = "sha256:d023ee369ddd2763310e4c3eae1ff649689440d4ae59d7485eb4cfbbe3e359f7"},
+]
+typing-extensions = [
+    {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
+    {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
+    {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
 ]
 urllib3 = [
     {file = "urllib3-1.25.10-py2.py3-none-any.whl", hash = "sha256:e7983572181f5e1522d9c98453462384ee92a0be7fac5f1413a1e35c56cc0461"},
