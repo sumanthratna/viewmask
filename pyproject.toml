@@ -15,7 +15,7 @@ numpy = "^1.18.4"
 opencv-python-headless = "^4.2.0"
 openslide-python = "^1.1.1"
 dask-image = "^0.3.0"
-toolz = "^0.10.0"
+toolz = ">=0.10,<0.12"
 scikit-image = "^0.17.2"
 napari = {extras = ["pyside2"], version = "^0.3.4"}
 Pillow = "^7.1.2"
