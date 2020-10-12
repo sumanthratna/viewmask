@@ -14,13 +14,15 @@ class Annotations(UserList):
             self.extend(initlist)
 
     @classmethod
-    def from_tcga(cls, xml_tree):
+    def from_tcga(cls, xml_tree, fit_spline=False):
         """Extract contours from a TCGA XML annotations file.
 
         Parameters
         ----------
         xml_tree : xml.etree.ElementTree
             The XML tree of the TCGA annotations file.
+        fit_spline : bool, optional
+            Whether the points in each contour should be fit through a spline.
 
         Returns
         -------
@@ -30,11 +32,22 @@ class Annotations(UserList):
             with exactly 2 integers, representing the X and Y coordinates,
             respectively.
         """
+        # TODO: add reference to vmu.fit_spline_to_points in docstring
+        # TODO: fit_spline is untested
+
         from numpy import array as to_numpy_array, int32 as npint32
+
+        def region_to_contour(region_):
+            contour = [[float(vertex.get("X")), float(vertex.get("Y"))]
+                       for vertex in region]
+            if fit_spline:
+                from viewmask.utils import fit_spline_to_points
+                return fit_spline_to_points(contour)
+            else:
+                return contour
         contours = [
             to_numpy_array(
-                [[float(vertex.get("X")), float(vertex.get("Y"))]
-                    for vertex in region],
+                region_to_contour(region),
                 # np.int32 is necessary for cv2.drawContours
                 dtype=npint32)
             for region in xml_tree.getroot().iter("Vertices")
@@ -91,6 +104,11 @@ class Annotations(UserList):
             return [flip(coordinate_pair) for coordinate_pair in self.data]
         elif mode == 'opencv':
             return self.data
+
+    def fit_spline(self):
+        # TODO: docstring
+        self.data = [region_to_contour(region) for region in self.data]
+        return self
 
     def as_image(self):
         """Convert an annotations object to an annotation mask.

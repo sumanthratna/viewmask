@@ -255,19 +255,19 @@ def get_hematoxylin(rgb):
     arr_hema : ndarray
         A 2-dimensional array representing the hematoxylin
         intensity.
-        
+
     Raises
     ------
     ValueError
         If `rgb` is not at least 2-D with shape (..., 3).
-        
+
     References
     ----------
     .. [1] A. C. Ruifrok and D. A. Johnston, "Quantification of histochemical
            staining by color deconvolution.," Analytical and quantitative
            cytology and histology / the International Academy of Cytology [and]
            American Society of Cytology, vol. 23, no. 4, pp. 291-9, Aug. 2001.
-           
+
     Examples
     --------
     >>> from skimage import data
@@ -276,7 +276,7 @@ def get_hematoxylin(rgb):
     >>> he_layer = get_hematoxylin(rgb)
     """
     from skimage.color import rgb2hed
-    
+
     # matplotlib navy is (22, 0, 134), vispy navy is (0, 0, 128)
     # cmap_hema = Colormap(['white', 'navy'])
 
@@ -289,3 +289,27 @@ def get_hematoxylin(rgb):
     ihc_hed = rgb2hed(rgb)
     arr_hema = ihc_hed[:, :, 0]
     return arr_hema
+
+
+def fit_spline_to_points(points):
+    """Fits a B-spline through a sequence of points.
+
+    Parameters
+    ----------
+    points : numpy.ndarray
+        A list of sample vector arrays representing the curve.
+
+    Returns
+    -------
+    spline_points : numpy.ndarray
+        An N-dimensional NumPy array representing the RGB output image with the
+        shape defined as `shape`.
+    """
+    # https://pathflowinterns.slack.com/archives/DTLUTM8NS/p1597243698287400
+    # TODO: are the docstrings/types correct?
+    from scipy.interpolate import splprep, splev
+    tck, u = splprep(points.T, u=None, s=0.0, per=1)
+    u_new = np.linspace(u.min(), u.max(), 1000)
+    x_new, y_new = splev(u_new, tck, der=0)
+    spline_points = np.vstack((x_new, y_new)).T
+    return spline_points

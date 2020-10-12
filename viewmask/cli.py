@@ -56,6 +56,7 @@ def view_annotations(annotations, interactive):
                 pass
             from viewmask import Annotations
             annotations = Annotations.from_tcga(tree)
+            annotations = regions.fit_spline()
             regions = annotations.export('napari')
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
@@ -81,6 +82,7 @@ def view_annotations(annotations, interactive):
                     # unparseable
                     pass
                 annotations = Annotations.from_tcga(tree)
+                annotations = annotations.fit_spline()
                 rendered_annotations = annotations.as_image()
             else:
                 # TODO: raise ValueError
@@ -162,6 +164,7 @@ def view_overlay(image, annotations, interactive):
                 pass
             from viewmask import Annotations
             annotations = Annotations.from_tcga(tree)
+            annotations = annotations.fit_spline()
             regions = annotations.export('napari')
             line_color = get_stroke_color(tree)
             viewer.add_shapes(
@@ -188,6 +191,7 @@ def view_overlay(image, annotations, interactive):
                     pass
                 from viewmask import Annotations
                 annotations = Annotations.from_tcga(tree)
+                annotations = annotations.fit_spline()
                 rendered_annotations = annotations.as_image()
             else:
                 # TODO: raise ValueError
