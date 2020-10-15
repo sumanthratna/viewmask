@@ -23,16 +23,12 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install poetry
-        poetry config repositories.testpypi "https://test.pypi.org/simple/"
         poetry build
-    - name: Test PyPI upload
-      id: test-pypi
-      run: |
-        poetry publish --repository testpypi --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
-        echo ::set-output name=exit_code::$?
     - name: Publish to PyPI
-      if: steps.test-pypi.outputs.exit_code == 0
-      run: poetry publish --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
+      # the || true overrides the exit code. this is useful in case the package
+      # has already been uploaded to PyPI (in which case Poetry would raise
+      # "HTTP Error 400: File already exists" and exit with exit code 1).
+      run: poetry publish --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }} || true
 
     - name: Get the package version
       id: get_version
