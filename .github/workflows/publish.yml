@@ -64,5 +64,5 @@ jobs:
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
         tags: |
-          ${{ GITHUB_REPOSITORY }}:latest
-          ${{ GITHUB_REPOSITORY }}:${{ steps.get_version.outputs.VERSION }}
+          ${{ env.GITHUB_REPOSITORY }}:latest
+          ${{ env.GITHUB_REPOSITORY }}:${{ steps.get_version.outputs.VERSION }}
