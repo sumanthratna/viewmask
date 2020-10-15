@@ -23,6 +23,7 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+        source $HOME/.poetry/env
     - name: Build and publish Python package
       run: |
         poetry publish --build --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
@@ -35,7 +36,7 @@ jobs:
         path: /tmp/.buildx-cache
         key: ${{ runner.os }}-buildx-${{ github.sha }}
         restore-keys: |
-          ${{ runner.os }}-buildx-    
+          ${{ runner.os }}-buildx-
     - name: Build and publish Docker image to Docker Hub
       uses: docker/build-push-action@v2
       with:
