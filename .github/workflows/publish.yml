@@ -19,13 +19,19 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
-    - name: Install dependencies
+    - name: Install dependencies and build package
       run: |
         python3 -m pip install --upgrade pip
         python3 -m pip install poetry
-    - name: Build and publish Python package
+        poetry build
+    - name: Test PyPI upload
+      id: test-pypi
       run: |
-        poetry publish --build --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
+        poetry publish --repository "https://test.pypi.org/simple/" --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
+        echo ::set-output name=exit_code::$?
+    - name: Publish to PyPI
+      if: steps.test-pypi.outputs.exit_code == 0
+      run: poetry publish --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
