@@ -33,6 +33,10 @@ jobs:
       if: steps.test-pypi.outputs.exit_code == 0
       run: poetry publish --username ${{ secrets.PYPI_USERNAME }} --password ${{ secrets.PYPI_PASSWORD }}
 
+    - name: Get the package version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
     - name: Cache Docker layers
@@ -42,24 +46,23 @@ jobs:
         key: ${{ runner.os }}-buildx-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-buildx-
-    - name: Build and publish Docker image to Docker Hub
-      uses: docker/build-push-action@v2
+    - name: Log into Docker Hub
+      uses: docker/login-action@v1
       with:
-        push: true
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: sumanthratna/viewmask
-        tag_with_ref: true
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache
-    - name: Build and publish Docker image to GitHub Packages
+    - name: Log into GitHub Packages
+      uses: docker/login-action@v1
+      with:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push
       uses: docker/build-push-action@v2
       with:
         push: true
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        repository: sumanthratna/viewmask
-        tag_with_ref: true
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
+        tags: |
+          ${{ GITHUB_REPOSITORY }}:latest
+          ${{ GITHUB_REPOSITORY }}:${{ steps.get_version.outputs.VERSION }}
