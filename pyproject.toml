@@ -21,7 +21,7 @@ napari = {extras = ["pyside2"], version = "^0.3.4"}
 Pillow = "^8.0.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.0"
+pytest = "^6.2"
 sphinx = "^3.2.1"
 sphinx-click = "^2.3.2"
 
