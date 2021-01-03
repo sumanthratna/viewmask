@@ -1,0 +1,20 @@
+name: '[docker] Build Package and Run Tests'
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build --tag "sumanthratna/viewmask:$GITHUB_SHA" .
+
+    - name: Run tests
+      run: docker run "sumanthratna/viewmask:$GITHUB_SHA" /bin/sh -c "poetry run pytest tests/"
