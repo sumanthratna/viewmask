@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import click
-import napari
 import xml.etree.ElementTree as ET
 import numpy as np
 from viewmask.utils import (
@@ -12,16 +11,55 @@ from viewmask.utils import (
     centers_to_image
 )
 from os.path import splitext
-
+try:
+    import napari
+except ImportError:
+    napari = None
 
 INTERACTIVE_OPTION_HELP = 'If passed, the annotations will be rendered as ' + \
-    'napari objects rather than rendered together and displayed as an image.'
+    '`napari` objects rather than rendered together and displayed as an image.'
+
+NAPARI_NOT_INSTALLED_WARNING = "The package `napari` is not installed. " + \
+    "We recommend installing `napari`, which will enable viewing outputs " + \
+    "in an interactive image viewer."
+
+
+def validate_interactive_napari(ctx, param, value):
+    # assert isinstance(value, bool)
+    if value and napari is None:
+        raise click.BadParameter(
+            'The `interactive` flag cannot be passed '
+            'without `napari` in the environment. Please install the `napari` '
+            'package if you would like to use the `napari` interactive '
+            'viewer.')
+
+
+def validate_interactive_xml(ctx, param, value):
+    # TODO: don't rely on filepath extension, actually check file contents
+    _, annotations_ext = splitext(ctx.params['annotations'])
+    annotations_are_xml = annotations_ext == '.xml'
+    if value and not annotations_are_xml:
+        raise click.BadParameter(
+            "The `interactive` flag is only supported with XML annotations.")
+
+
+class ComposedCallback:
+    def __init__(self, *callbacks):
+        self.callbacks = callbacks
+
+    def __call__(self, ctx, param, value):
+        output = None
+        for callback in self.callbacks:
+            output = callback(ctx, param, value)
+        return output
 
 
 @click.group()
 @click.version_option()
 def cli():
-    pass
+    if napari is None:
+        from warnings import warn
+        warn(NAPARI_NOT_INSTALLED_WARNING)
 
 
 @cli.command(name='annotations')
@@ -36,14 +74,14 @@ def cli():
     show_default=True,
     type=bool,
     is_flag=True,
-    help=INTERACTIVE_OPTION_HELP
+    help=INTERACTIVE_OPTION_HELP,
+    callback=ComposedCallback(
+        validate_interactive_napari, validate_interactive_xml),
 )
 def view_annotations(annotations, interactive):
-    annotations_ext = splitext(annotations)[1]
-    annotations_are_not_xml = annotations_ext != '.xml'
-    if annotations_are_not_xml and interactive is True:
-        raise ValueError(
-            "The interactive flag is only supported with XML annotations.")
+    if napari is None:
+        return
+    _, annotations_ext = splitext(annotations)
 
     with napari.gui_qt():
         viewer = napari.Viewer()
@@ -119,6 +157,8 @@ def view_annotations(annotations, interactive):
 @cli.command(name='image')
 @click.argument('image', type=click.Path(exists=True, dir_okay=False))
 def view_image(image):
+    if napari is None:
+        return
     da_img = file_to_dask_array(image)
     with napari.gui_qt():
         napari.view_image(da_img, name='image', multiscale=False)
@@ -134,14 +174,14 @@ def view_image(image):
     show_default=True,
     type=bool,
     is_flag=True,
-    help=INTERACTIVE_OPTION_HELP
+    help=INTERACTIVE_OPTION_HELP,
+    callback=ComposedCallback(
+        validate_interactive_napari, validate_interactive_xml),
 )
 def view_overlay(image, annotations, interactive):
+    if napari is None:
+        return
     annotations_ext = splitext(annotations)[1]
-    annotations_are_not_xml = annotations_ext != '.xml'
-    if annotations_are_not_xml and interactive is True:
-        raise ValueError(
-            "The interactive flag is only supported with XML annotations.")
 
     da_img = file_to_dask_array(image)
 
