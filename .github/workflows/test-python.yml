@@ -1,4 +1,4 @@
-name: Build Package and Run Tests
+name: '[python] Build Package and Run Tests'
 
 on:
   push:
@@ -28,10 +28,5 @@ jobs:
     - name: Build Python package
       run: poetry build
 
-    - name: Build Docker image
-      run: docker build --tag "sumanthratna/viewmask:$GITHUB_SHA" .
-
     - name: Run tests
-      run: |
-        poetry run pytest tests/
-        docker run "sumanthratna/viewmask:$GITHUB_SHA" /bin/sh -c "poetry run pytest tests/"
+      run: poetry run pytest tests/
