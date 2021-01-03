@@ -41,9 +41,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-
     - name: Build Docker image
-      run: docker build -t sumanthratna/viewmask .
+      run: docker build --tag "sumanthratna/viewmask:$GITHUB_SHA" .
 
     - name: Run tests
       run: |
         poetry run pytest tests/
-        docker run sumanthratna/viewmask /bin/sh -c "poetry run pytest tests/"
+        docker run "sumanthratna/viewmask:$GITHUB_SHA" /bin/sh -c "poetry run pytest tests/"
