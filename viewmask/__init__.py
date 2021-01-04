@@ -37,17 +37,9 @@ class Annotations(UserList):
 
         from numpy import array as to_numpy_array, int32 as npint32
 
-        def region_to_contour(region_):
-            contour = [[float(vertex.get("X")), float(vertex.get("Y"))]
-                       for vertex in region]
-            if fit_spline:
-                from viewmask.utils import fit_spline_to_points
-                return fit_spline_to_points(contour)
-            else:
-                return contour
         contours = [
             to_numpy_array(
-                region_to_contour(region),
+                utils.region_to_contour(region, fit_spline=fit_spline),
                 # np.int32 is necessary for cv2.drawContours
                 dtype=npint32)
             for region in xml_tree.getroot().iter("Vertices")
@@ -103,11 +95,16 @@ class Annotations(UserList):
             from numpy import flip
             return [flip(coordinate_pair) for coordinate_pair in self.data]
         elif mode == 'opencv':
-            return self.data
+            from numpy import asarray as to_numpy_array, int32 as npint32
+
+            out = [[], ] * len(self.data)
+            for index, contour in enumerate(self.data):
+                out[index] = to_numpy_array(contour, dtype=npint32)
+            return out
 
     def fit_spline(self):
         # TODO: docstring
-        self.data = [region_to_contour(region) for region in self.data]
+        self.data = list(map(utils.region_to_contour, self.data))
         return self
 
     def as_image(self):
@@ -125,9 +122,9 @@ class Annotations(UserList):
         y_max = np.amax([y for contour in contours for _, y in contour])
         shape = (y_max, x_max, 3)
         rendered_annotations = np.zeros(shape, dtype=np.uint8)
-        drawContours(rendered_annotations, contours, -1, [0, 255, 0])
+        rendered_annotations = drawContours(rendered_annotations, contours, -1, [0, 255, 0])
         for contour in contours:
-            fillPoly(
+            rendered_annotations = fillPoly(
                 rendered_annotations,
                 np.array([contour], dtype=np.int32),
                 [230, 230, 230]

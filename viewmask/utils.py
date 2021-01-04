@@ -292,7 +292,7 @@ def get_hematoxylin(rgb):
 
 
 def fit_spline_to_points(points):
-    """Fits a B-spline through a sequence of points.
+    """Fit a B-spline through a sequence of points.
 
     Parameters
     ----------
@@ -313,3 +313,37 @@ def fit_spline_to_points(points):
     x_new, y_new = splev(u_new, tck, der=0)
     spline_points = np.vstack((x_new, y_new)).T
     return spline_points
+
+
+def region_to_contour(region, fit_spline=False):
+    """Convert an XML region to a contour.
+
+    Parameters
+    ----------
+    region : list of vertices
+        A list of vertices, where each vertex is a dict with an 'X' and a 'Y'
+        key which correspond to a number (int or float).
+    fit_spline : bool, optional
+        Whether a B-spline should be fit through the contour.
+
+    Returns
+    -------
+    contour : list of list of float
+        A list of points, where each point is a two-element list representing
+        an (X, Y) coordinate pair.
+
+    See Also
+    --------
+    fit_spline_to_points : Fit a B-spline through a contour.
+    """
+    from xml.etree.ElementTree import Element
+    def vertex_to_cartesian_pair(vertex):
+        if isinstance(vertex, (Element, dict)):
+            return [float(vertex.get("X")), float(vertex.get("Y"))]
+        elif isinstance(vertex, np.ndarray):
+            return vertex.tolist()
+    contour = list(map(vertex_to_cartesian_pair, region))
+    if fit_spline:
+        return fit_spline_to_points(contour).tolist()
+    else:
+        return contour

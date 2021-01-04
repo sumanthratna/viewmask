@@ -80,7 +80,9 @@ def cli():
 )
 def view_annotations(annotations, interactive):
     if napari is None:
+        # TODO: add output CLI option and write to file
         return
+    from viewmask import Annotations
     _, annotations_ext = splitext(annotations)
 
     with napari.gui_qt():
@@ -92,7 +94,6 @@ def view_annotations(annotations, interactive):
                 # TODO: don't just do nothing, some XMLs might actually be
                 # unparseable
                 pass
-            from viewmask import Annotations
             annotations = Annotations.from_tcga(tree)
             annotations = regions.fit_spline()
             regions = annotations.export('napari')
@@ -158,7 +159,8 @@ def view_annotations(annotations, interactive):
 @click.argument('image', type=click.Path(exists=True, dir_okay=False))
 def view_image(image):
     if napari is None:
-        return
+        raise click.UsageError("The `image` command cannot be used without "
+                               "the `napari` package installed.")
     da_img = file_to_dask_array(image)
     with napari.gui_qt():
         napari.view_image(da_img, name='image', multiscale=False)
@@ -180,6 +182,7 @@ def view_image(image):
 )
 def view_overlay(image, annotations, interactive):
     if napari is None:
+        # TODO: add output CLI option and write to file
         return
     annotations_ext = splitext(annotations)[1]
 
