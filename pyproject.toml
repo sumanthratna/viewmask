@@ -21,7 +21,7 @@ napari = {version = "^0.4.2", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
-Sphinx = "^3.2.1"
+Sphinx = "^3.4.2"
 sphinx-click = "^2.3.2"
 napari = {extras = ["pyside2"], version = "^0.4.2"}
 
