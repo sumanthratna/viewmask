@@ -96,11 +96,7 @@ class Annotations(UserList):
             return [flip(coordinate_pair) for coordinate_pair in self.data]
         elif mode == 'opencv':
             from numpy import asarray as to_numpy_array, int32 as npint32
-
-            out = [[], ] * len(self.data)
-            for index, contour in enumerate(self.data):
-                out[index] = to_numpy_array(contour, dtype=npint32)
-            return out
+            return [to_numpy_array(contour, dtype=npint32) for contour in self.data]
 
     def fit_spline(self):
         # TODO: docstring
@@ -122,7 +118,8 @@ class Annotations(UserList):
         y_max = np.amax([y for contour in contours for _, y in contour])
         shape = (y_max, x_max, 3)
         rendered_annotations = np.zeros(shape, dtype=np.uint8)
-        rendered_annotations = drawContours(rendered_annotations, contours, -1, [0, 255, 0])
+        rendered_annotations = drawContours(
+            rendered_annotations, contours, -1, [0, 255, 0])
         for contour in contours:
             rendered_annotations = fillPoly(
                 rendered_annotations,
