@@ -152,13 +152,3 @@ class Annotations(UserList):
     def extend(self, other):
         for x in other:
             self.append(x)
-
-
-__all__ = [
-    'utils.file_to_dask_array',
-    'utils.centers_of_contours',
-    'utils.get_stroke_color',
-    'utils.mask_to_contours',
-    'utils.centers_to_image',
-    'Annotations'
-]
