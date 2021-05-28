@@ -1,5 +1,5 @@
 from collections import UserList
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 from viewmask import utils  # noqa  # pylint: disable=unused-import
 
