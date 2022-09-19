@@ -14,7 +14,7 @@ click = "^8.0.1"
 numpy = "^1.18.4"
 opencv-python-headless = "^4.2.0"
 openslide-python = "^1.1.1"
-dask-image = "^0.6.0"
+dask-image = ">=0.6,<2022.10"
 scikit-image = "^0.18.1"
 Pillow = "^8.0.0"
 napari = {version = "^0.4.2", optional = true}
