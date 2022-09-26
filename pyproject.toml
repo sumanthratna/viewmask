@@ -22,7 +22,7 @@ scipy = "^1.6.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
-Sphinx = "^4.0.2"
+Sphinx = "^5.2.1"
 sphinx-click = "^3.0.0"
 napari = {extras = ["pyside2"], version = "^0.4.2"}
 
